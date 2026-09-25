@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NodalWaves 5×5 banners</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--void:#050507;--hull:#0E1014;--line:#20232A;--crimson:#CE0E2D;--hot:#FF2E4C;--chrome:#C6CDD6;--chrome-2:#8F96A0;--text:#F4F5F7;--body:#A3AAB4;--muted:#6B727C;--paper:#F3EFE7;--ink:#17181C;--ink-2:#5A5D66;
+ --display:"Big Shoulders Display",Impact,sans-serif;--body-font:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#222;font-family:var(--body-font);display:flex;flex-direction:column;gap:40px;padding:40px}
+.canvas{position:relative;overflow:hidden;background:var(--void);color:var(--body);flex:none}
+.canvas::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(206,14,45,.07) 0 1px,transparent 1px 56px),
+  repeating-linear-gradient(0deg,rgba(206,14,45,.07) 0 1px,transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 20%,transparent 100%);mask-image:radial-gradient(70% 70% at 50% 50%,#000 20%,transparent 100%)}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(206,14,45,.55) 0%,rgba(206,14,45,0) 65%);pointer-events:none}
+.display{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.01em;color:var(--text);margin:0}
+.chrome{background:linear-gradient(180deg,#FFFFFF 0%,#D7DCE3 42%,#8D949E 58%,#E9ECF0 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.red{background:linear-gradient(180deg,#FF5C74 0%,#E0122F 55%,#9E0A22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--chrome-2);display:flex;align-items:center;gap:12px}
+.eyebrow i{width:10px;height:10px;border-radius:50%;background:var(--hot);box-shadow:0 0 14px var(--hot)}
+.brand{display:flex;align-items:center;gap:14px;font-family:var(--display);font-weight:800;text-transform:uppercase;color:var(--text);letter-spacing:.03em}
+.brand img{display:block}
+.facts{display:flex;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(14,16,20,.75);font-family:var(--mono)}
+.facts div{padding:16px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.facts div:last-child{border-right:0}
+.facts b{font-family:var(--display);font-weight:800;color:var(--text);line-height:1}
+.facts span{letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fine{font-family:var(--mono);color:var(--muted);letter-spacing:.06em}
+.cta{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;font-weight:600;color:#fff;background:linear-gradient(180deg,#F02745,#CE0E2D 60%,#A80B25);box-shadow:0 0 0 1px rgba(255,46,76,.4),0 20px 50px -16px rgba(206,14,45,.9)}
+.url{font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--chrome)}
+
+/* receipt object */
+.receipt{position:relative;background:var(--paper);color:var(--ink);font-family:var(--mono);background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.028) 0 1px,transparent 1px 3px);box-shadow:0 40px 80px -20px rgba(0,0,0,.9)}
+.receipt::before,.receipt::after{content:"";position:absolute;left:0;right:0;height:12px}
+.receipt::before{top:-11px;background:linear-gradient(-135deg,transparent 8px,var(--paper) 0) 0 0/16px 16px repeat-x,linear-gradient(135deg,transparent 8px,var(--paper) 0) 8px 0/16px 16px repeat-x}
+.receipt::after{bottom:-11px;background:linear-gradient(-45deg,transparent 8px,var(--paper) 0) 0 0/16px 16px repeat-x,linear-gradient(45deg,transparent 8px,var(--paper) 0) 8px 0/16px 16px repeat-x}
+.rl{display:flex;justify-content:space-between;gap:12px}
+.rl.h{font-weight:700;letter-spacing:.22em}
+.rl.meta{color:var(--ink-2)}
+.rl.hot{color:var(--crimson);font-weight:700}
+.rl.tot{font-weight:700}
+.rl.ok span:last-child{color:#0F7A3B;font-weight:700}
+.rr{border-top:1px dashed rgba(23,24,28,.45)}
+.rfine{color:var(--ink-2);line-height:1.4}
+.stamp{position:absolute;border:3px double var(--crimson);border-radius:8px;color:var(--crimson);font-family:var(--display);font-weight:900;text-transform:uppercase;text-align:center;line-height:.95;letter-spacing:.04em;transform:rotate(-12deg);mix-blend-mode:multiply;opacity:.9}
+.barcode{background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px);opacity:.85}
+
+/* ------------- A1: OG / link share 1200x630 ------------- */
+#og{width:1200px;height:630px;padding:52px 64px 48px;display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:center}
+#og .glow{width:900px;height:900px;right:-260px;top:-260px}
+#og .left{position:relative;z-index:1;display:flex;flex-direction:column;height:530px}
+#og .eyebrow{font-size:14px;margin:0 0 20px}
+#og h1{font-size:112px}
+#og .lede{font-size:20px;line-height:1.45;color:var(--body);max-width:34ch;margin:22px 0 0}
+#og .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+#og .receipt{width:340px;padding:22px 22px 24px;font-size:12.5px;line-height:1.55;transform:rotate(3deg)}
+#og .rr{margin:9px 0}
+#og .rl.h{font-size:14px}#og .rl.meta{font-size:11px}#og .rfine{font-size:10.5px;margin-top:10px}
+#og .stamp{right:14px;top:22px;font-size:24px;padding:5px 10px}
+#og .barcode{height:34px;margin-top:12px}
+#og .brand{font-size:22px}#og .brand img{width:36px;height:36px}
+#og .url{font-size:13px}
+
+/* ------------- A2: Instagram post 1080x1080 ------------- */
+#post-a{width:1080px;height:1080px;padding:72px;display:flex;flex-direction:column;justify-content:space-between}
+#post-a .glow{width:1100px;height:1100px;left:-380px;bottom:-500px}
+#post-a .eyebrow{font-size:15px}
+#post-a h1{font-size:150px;margin-top:22px}
+#post-a .receipt{position:absolute;right:72px;top:540px;width:370px;padding:24px 24px 26px;font-size:13px;line-height:1.55;transform:rotate(-5deg);z-index:2}
+#post-a .rr{margin:10px 0}
+#post-a .rl.h{font-size:15px}#post-a .rl.meta{font-size:11.5px}#post-a .rfine{font-size:11px;margin-top:10px}
+#post-a .stamp{right:14px;top:24px;font-size:28px;padding:6px 12px}
+#post-a .barcode{height:38px;margin-top:12px}
+#post-a .bottom{display:flex;flex-direction:column;gap:22px;position:relative;z-index:1}
+#post-a .facts b{font-size:34px}#post-a .facts span{font-size:12px}
+#post-a .row{display:flex;justify-content:space-between;align-items:center}
+#post-a .brand{font-size:26px}#post-a .brand img{width:44px;height:44px}
+#post-a .url{font-size:15px}
+#post-a .fine{font-size:12px}
+
+/* ------------- A3: Instagram story 1080x1920 ------------- */
+#story{width:1080px;height:1920px;padding:120px 80px 110px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:space-between}
+#story .glow{width:1300px;height:1300px;left:-110px;top:420px}
+#story .brand{font-size:30px}#story .brand img{width:52px;height:52px}
+#story .eyebrow{font-size:16px;justify-content:center;margin-top:28px}
+#story h1{font-size:196px;margin-top:20px}
+#story .receipt{width:520px;padding:34px 34px 36px;font-size:18px;line-height:1.55;transform:rotate(-3deg);text-align:left;position:relative;z-index:1}
+#story .rr{margin:13px 0}
+#story .rl.h{font-size:21px}#story .rl.meta{font-size:15px}#story .rfine{font-size:14px;margin-top:14px}
+#story .stamp{right:20px;top:34px;font-size:40px;padding:8px 16px}
+#story .barcode{height:52px;margin-top:18px}
+#story .cta{font-size:28px;padding:0 44px;height:88px}
+#story .url{font-size:18px;margin-top:22px}
+#story .fine{font-size:14px;margin-top:18px;max-width:46ch;line-height:1.5}
+
+/* ------------- B1: Instagram post 1080x1080 bold type ------------- */
+#post-b{width:1080px;height:1080px;padding:72px;display:flex;flex-direction:column;justify-content:space-between}
+#post-b .glow{width:1200px;height:1200px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.8}
+#post-b .top{display:flex;justify-content:space-between;align-items:center}
+#post-b .brand{font-size:26px}#post-b .brand img{width:44px;height:44px}
+#post-b .eyebrow{font-size:14px}
+#post-b h1{font-size:184px;position:relative;z-index:1}
+#post-b .strip{font-family:var(--mono);font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--chrome);display:flex;gap:26px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}
+#post-b .strip b{color:var(--hot);font-weight:500}
+#post-b .fine{font-size:12px;margin-top:14px}
+
+/* ------------- B2: X header 1500x500 ------------- */
+#x{width:1500px;height:500px;padding:56px 70px 56px 250px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+#x .glow{width:1100px;height:1100px;right:-300px;top:-300px}
+#x h1{font-size:118px;white-space:nowrap}
+#x .right{display:flex;flex-direction:column;align-items:flex-end;gap:18px;text-align:right;position:relative;z-index:1}
+#x .brand{font-size:26px}#x .brand img{width:46px;height:46px}
+#x .strip{font-family:var(--mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--chrome);line-height:2}
+#x .strip b{color:var(--hot);font-weight:500}
+#x .fine{font-size:11.5px}
+</style>
+</head>
+<body>
+
+<!-- A1 -->
+<div class="canvas" id="og" data-name="og-1200x630">
+  <div class="glow"></div>
+  <div class="left">
+    <p class="eyebrow"><i></i>NodalWaves · 5×5 Participation Program</p>
+    <h1 class="display">Same <span class="chrome">$10.</span><br>Different <span class="red">receipt.</span></h1>
+    <p class="lede">One $10 activation of $NODAL, matched token-for-token, committed 24 months. Then build your 5.</p>
+    <div class="foot"><div class="brand"><img src="../assets/badge-192.png" alt="">NodalWaves</div><div class="url">nodalwaves.com</div></div>
+  </div>
+  <div class="receipt">
+    <div class="rl h"><span>NODALWAVES</span></div>
+    <div class="rl h" style="letter-spacing:.14em">ACTIVATION RECEIPT</div>
+    <div class="rl meta"><span>#NW-5X5-000001</span><span>POLYGON</span></div>
+    <div class="rr"></div>
+    <div class="rl"><span>QUALIFYING PURCHASE</span><span>$10.00</span></div>
+    <div class="rl"><span>NODAL PURCHASED</span><span>2,898.00</span></div>
+    <div class="rl hot"><span>PROMO NODAL · 1:1</span><span>+2,898.00</span></div>
+    <div class="rr"></div>
+    <div class="rl tot"><span>TOKEN POSITION</span><span>5,796 NODAL</span></div>
+    <div class="rl"><span>COMMITMENT</span><span>24 MONTHS</span></div>
+    <div class="rl ok"><span>STATUS</span><span>ACTIVE ●</span></div>
+    <p class="rfine">Token quantities, not a cash balance. No guaranteed return.</p>
+    <div class="barcode"></div>
+    <div class="stamp">Matched<br>1 : 1</div>
+  </div>
+</div>
+
+<!-- A2 -->
+<div class="canvas" id="post-a" data-name="ig-post-receipt-1080x1080">
+  <div class="glow"></div>
+  <div style="position:relative;z-index:1">
+    <p class="eyebrow"><i></i>5×5 Participation Program</p>
+    <h1 class="display">Same<br><span class="chrome">$10.</span><br>Different<br><span class="red">receipt.</span></h1>
+  </div>
+  <div class="receipt">
+    <div class="rl h"><span>NODALWAVES</span></div>
+    <div class="rl h" style="letter-spacing:.14em">ACTIVATION RECEIPT</div>
+    <div class="rl meta"><span>#NW-5X5-000001</span><span>POLYGON</span></div>
+    <div class="rr"></div>
+    <div class="rl"><span>QUALIFYING PURCHASE</span><span>$10.00</span></div>
+    <div class="rl"><span>NODAL PURCHASED</span><span>2,898.00</span></div>
+    <div class="rl hot"><span>PROMO NODAL · 1:1</span><span>+2,898.00</span></div>
+    <div class="rr"></div>
+    <div class="rl tot"><span>TOKEN POSITION</span><span>5,796 NODAL</span></div>
+    <div class="rl"><span>COMMITMENT</span><span>24 MONTHS</span></div>
+    <div class="rl"><span>BUILD YOUR 5</span><span>L1 → L5</span></div>
+    <div class="rl ok"><span>STATUS</span><span>ACTIVE ●</span></div>
+    <p class="rfine">Token quantities, not a cash balance. Market value changes. No guaranteed return.</p>
+    <div class="barcode"></div>
+    <div class="stamp">Matched<br>1 : 1</div>
+  </div>
+  <div class="bottom">
+    <div class="row"><div class="brand"><img src="../assets/badge-192.png" alt="">NodalWaves</div><div class="url">nodalwaves.com</div></div>
+    <p class="fine">Not financial advice. No guaranteed income or returns. One promo per verified device.</p>
+  </div>
+</div>
+
+<!-- A3 -->
+<div class="canvas" id="story" data-name="ig-story-receipt-1080x1920">
+  <div class="glow"></div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center">
+    <div class="brand"><img src="../assets/badge-192.png" alt="">NodalWaves</div>
+    <p class="eyebrow"><i></i>5×5 Participation Program</p>
+    <h1 class="display">Same <span class="chrome">$10.</span><br>Different<br><span class="red">receipt.</span></h1>
+  </div>
+  <div class="receipt">
+    <div class="rl h"><span>NODALWAVES</span></div>
+    <div class="rl h" style="letter-spacing:.14em">ACTIVATION RECEIPT</div>
+    <div class="rl meta"><span>#NW-5X5-000001</span><span>POLYGON</span></div>
+    <div class="rr"></div>
+    <div class="rl"><span>QUALIFYING PURCHASE</span><span>$10.00</span></div>
+    <div class="rl"><span>NODAL PURCHASED</span><span>2,898.00</span></div>
+    <div class="rl hot"><span>PROMO NODAL · 1:1</span><span>+2,898.00</span></div>
+    <div class="rr"></div>
+    <div class="rl tot"><span>TOKEN POSITION</span><span>5,796 NODAL</span></div>
+    <div class="rl"><span>COMMITMENT</span><span>24 MONTHS</span></div>
+    <div class="rl"><span>BUILD YOUR 5</span><span>L1 → L5</span></div>
+    <div class="rl ok"><span>STATUS</span><span>ACTIVE ●</span></div>
+    <p class="rfine">Token quantities, not a cash balance. Market value changes. No guaranteed return.</p>
+    <div class="barcode"></div>
+    <div class="stamp">Matched<br>1 : 1</div>
+  </div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center">
+    <div class="cta">Start with $10</div>
+    <div class="url">nodalwaves.com · t.me/Nodalwaves</div>
+    <p class="fine">Not financial advice. No guaranteed income or returns. One promo per verified device. Do your own research.</p>
+  </div>
+</div>
+
+<!-- B1 -->
+<div class="canvas" id="post-b" data-name="ig-post-boldtype-1080x1080">
+  <div class="glow"></div>
+  <div class="top" style="position:relative;z-index:1">
+    <div class="brand"><img src="../assets/badge-192.png" alt="">NodalWaves</div>
+    <p class="eyebrow"><i></i>5×5 Program</p>
+  </div>
+  <h1 class="display">Ten<br>dollars.<br><span class="chrome">Two years.</span><br><span class="red">Five people.</span></h1>
+  <div style="position:relative;z-index:1">
+    <div class="strip"><span><b>$10</b> activation</span><span><b>1:1</b> promo match</span><span><b>24 mo</b> commitment</span><span><b>5 levels</b> · max 20%</span></div>
+    <p class="fine">Token quantities, not a cash value. No guaranteed income or returns. nodalwaves.com</p>
+  </div>
+</div>
+
+<!-- B2 -->
+<div class="canvas" id="x" data-name="x-header-1500x500">
+  <div class="glow"></div>
+  <h1 class="display" style="position:relative;z-index:1">Ten dollars.<br><span class="chrome">Two years.</span><br><span class="red">Five people.</span></h1>
+  <div class="right">
+    <div class="brand"><img src="../assets/badge-192.png" alt="">NodalWaves</div>
+    <div class="strip"><b>$10</b> activation · <b>1:1</b> promo match<br><b>24 mo</b> commitment · <b>5 levels</b> · max 20%</div>
+    <p class="fine">No guaranteed income or returns · nodalwaves.com</p>
+  </div>
+</div>
+
+</body>
+</html>

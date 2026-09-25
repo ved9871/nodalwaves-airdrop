@@ -1,0 +1,6 @@
+dist/
+preview/desk-*.png
+preview/mobile-sheet.png
+__pycache__/
+.DS_Store
+Thumbs.db
