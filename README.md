@@ -1,55 +1,92 @@
-# NodalWaves 5×5 — landing page
+# NodalWaves — landing page
 
-Static landing page for the NodalWaves **5×5 Participation Growth Program** ($10 activation → 24-month
-commitment → 1:1 promotional NODAL → Build Your 5 → five generation rates 5 / 5 / 4 / 3 / 3, max 20%).
-Built from `Airdrop development Plan.pdf` (Final IT development specification v2.0, 25 Sep 2026).
+**Start small. Stay for the journey. Power the Next Wave.**
+
+Static, mobile-first landing page that positions the $10 NODAL entry as the first step into the
+NodalWaves ecosystem (identity, learning, participation, future utility), with the optional
+Community Partner program on its own page.
 
 No build step. Open `index.html` or serve the folder as-is (GitHub Pages, Cloudflare Pages, any static host).
 
 ```
-index.html          page markup + copy
-styles.css          design system + components
-main.js             level-unlock explorer, launch-list form (demo), scroll reveals, receipt timestamp
-assets/             red-dot logo badge (64 / 192 / 512 / 1024) + favicon
+index.html          landing page markup + copy (13 sections + the "Start my journey" dialog)
+community.html      Community Partner program (optional; compensation mechanics live here, not on the landing page)
+config.js           business rules, price source, links, flow mode + integration hooks, unconfirmed-rule placeholders
+styles.css          design system + components, mobile-first (390px base → 760 tablet → 1024 desktop)
+community.css       components used only by community.html (level explorer, ranks, ledger)
+main.js             calculator, rails, tabs, journey dialog, mobile menu, launch-list forms, scroll reveals
+community.js        level-unlock explorer (reads config.community)
+assets/             official NodalWaves badge (64 / 192 / 512 / 1024) + favicon
 banners/            banners.html (source for all sizes) + exported PNGs
-preview/            shoot.py (Playwright screenshots) + desktop / mobile captures
-build-artifact.mjs  inlines CSS/JS into dist/artifact.html for claude.ai Artifact publishing
+preview/            shoot.mjs (Playwright screenshots) + desktop / mobile captures
+build-artifact.mjs  inlines CSS/JS/config into dist/artifact.html for single-file previews
 ```
 
-## Design
+## Page story (in order)
 
-- **Signature:** the activation receipt. A thermal-paper receipt that prints itself in the hero and recurs
-  as the "every allocation has a receipt" ledger. Receipt = proof = the brand's security-first stance.
-- **Palette:** void `#050507`, hull `#0E1014`, crimson `#CE0E2D` / hot `#FF2E4C`, chrome `#C6CDD6`,
-  paper `#F3EFE7`, gold `#FCD033` (used once, APEX only).
-- **Type:** Big Shoulders Display (display, page-level override of Space Grotesk for the Gen Z audience),
-  Inter (body, brand standard), JetBrains Mono (receipt, HUD labels, data — brand standard).
-- Reduced motion respected; keyboard focus visible; no horizontal overflow at 390px.
+1. Hero — *Start small. Stay for the journey.* Passport preview card, no program mechanics.
+2. Why we're building NodalWaves — purpose before mechanics.
+3. What can $10 start? — spending vs participating.
+4. How it works — three steps: get NODAL, commit, receive promotional NODAL.
+5. Live NODAL calculator — `$10 / applicable price = estimated NODAL`, plus the promotional allocation. Estimate only.
+6. The ecosystem — $NODAL → Passport → Quest → staking & participation → Nodes → marketplace & utility → future gaming.
+7. Your journey — Identity / Learn / Progress / Participate / Discover, with a Passport / Quest interface preview.
+8. 24 months, one long-term journey — milestone timeline + the commitment in plain terms.
+9. Two years can change a lot — with the seed → network growth figure.
+10. Community Partner — optional, one CTA to `community.html`.
+11. Trust & transparency — what it is / what it is not.
+12. FAQ.
+13. Final CTA — *Every big journey has a first step.*
 
-## Copy rules baked in (from the spec §9 and the brand context)
+## Editing copy and rules
 
-- Never "$10 becomes $20", "double your money", fixed future USD value, guaranteed income / rate / price.
-- Promo is a **token quantity** (same units, separate vault). Fiat reference is informational only.
-- Level figures are shown as **the rule applied to one example activation**, never as an income projection.
-- Community Partner is **opt-in**; registration alone qualifies nothing; one promo per verified device.
-- Ranks are recognition, APEX verified manually. No spillover / compression / auto-placement.
-- Legacy names (NodeWaves, NWS) never appear. Run `grep -i -E "nodewaves|\bnws\b|apy|yield" index.html` before shipping.
+- **Copy** lives in `index.html` / `community.html` as plain semantic markup. Each section starts with a
+  `<!-- ==== N. NAME ==== -->` comment.
+- **Numbers and rules** live in `config.js`. The entry amount and commitment months are injected wherever the
+  markup carries `data-cfg="entry.amount"` / `data-cfg="entry.months"`, so they only need changing once.
+- **Price source** (`config.price.source`): `placeholder` (development placeholder, labelled on the page),
+  `static` (an official reference quote) or `api` (fetched from `price.api.url`, value at `price.api.jsonPath`).
+  The page never shows a quantity it did not compute; if the price cannot load it says so.
+- **Start my journey flow** (`config.flow.mode`): `prelaunch` runs steps 1–2 (summary, understanding confirmation)
+  and collects an email for the official link at step 3, previewing steps 4–7. `live` calls the async hooks in
+  `config.flow.integrations` (`connect`, `purchase`, `commit`, `eligibility`) and ends on *Welcome to the Next Wave*
+  → create your Nodal Passport → start your first quest.
+- **Launch list**: `config.flow.launchListEndpoint` — empty string is a front-end demo; set a POST endpoint to wire the CRM.
+- **Unconfirmed rules** (`config.unconfirmedRules`) are `null` on purpose. The pages make no public statement about
+  directs beyond five, sponsor locking / corrections, unused-level handling or the exact promotional release schedule
+  until the product owner confirms them.
+
+## Copy rules baked in
+
+- Never "1:1", "match", "$10 becomes $20", "double your money", a fixed future USD value, or guaranteed income / rate / price.
+- The promotional benefit is **100% purchase-linked promotional NODAL**: an additional allocation equal to the qualifying
+  purchased token quantity. Token units, never a dollar value.
+- No levels, percentages, ranks or referral language in the hero, navigation or the first two-thirds of the page.
+- Community Partner is opt-in; the landing page links to it once. Rates, ranks and the ledger example live on `community.html`.
+- Legacy names (NodeWaves, NWS) never appear.
+
+```bash
+grep -n -i -E "1 ?: ?1|match|becomes \$20|100x|nodewaves|\bnws\b" index.html community.html   # should return nothing
+```
 
 ## Regenerate previews and banners
 
 ```bash
-python preview/shoot.py page index.html preview/desktop-full.png 1440 900 full
-python preview/shoot.py page index.html preview/mobile-full.png 390 844 full mobile
-python preview/shoot.py banners banners/banners.html banners
+node preview/shoot.mjs page index.html preview/desktop-full.png 1440 900 full
+node preview/shoot.mjs page index.html preview/mobile-full.png 390 844 full mobile
+node preview/shoot.mjs page index.html preview/hero-1440x900.png 1440 900 viewport
+node preview/shoot.mjs banners banners/banners.html banners
 node build-artifact.mjs
 ```
 
-(Playwright uses the system Edge via `channel="msedge"`.)
+`shoot.mjs` uses the Playwright package plus its Chromium (set `CHROME_PATH` to point at another browser binary).
+If the machine cannot reach Google Fonts from a headless browser, set `FONT_DIR` to a folder holding the Google
+Fonts CSS as `local.css` (with font URLs rewritten to `https://fonts.gstatic.com/local/<file>`) and the woff2 files;
+the script serves them locally.
 
-## Open items for management sign-off
+## Open items for product sign-off
 
-1. Program name on the page: "5×5 Participation Program" (the spec's name). "Airdrop" is deliberately not used
-   in copy because the mechanic is a purchase-linked promo, not a free distribution.
-2. Launch-list form is a front-end demo; wire it to the CRM / mailing tool before go-live.
-3. Activation CTA currently anchors to the launch list; point it at the real activation flow once built.
-4. The 2,898 NODAL example quote comes from the spec; refresh if the reference quote changes.
+1. Replace the development placeholder price with the real reference price source (`config.price`).
+2. Wire the launch list (`config.flow.launchListEndpoint`) and, at launch, the flow integrations (`config.flow.integrations`).
+3. Confirm the rules under `config.unconfirmedRules`, then surface them in copy.
+4. Point the `terms` link at the published program terms.

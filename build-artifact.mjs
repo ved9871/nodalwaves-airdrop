@@ -4,12 +4,14 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
 const html = readFileSync('index.html', 'utf8');
 const css = readFileSync('styles.css', 'utf8');
+const cfg = readFileSync('config.js', 'utf8');
 const js = readFileSync('main.js', 'utf8');
 
 const title = html.match(/<title>([\s\S]*?)<\/title>/)[1];
 const fonts = html.match(/<link href="https:\/\/fonts\.googleapis\.com[^>]*>/)[0];
 const body = html.match(/<body>([\s\S]*)<\/body>/)[1]
-  .replace(/<script src="main\.js"><\/script>\s*/, '');
+  .replace(/<script src="config\.js"><\/script>\s*/, '')
+  .replace(/<script src="main\.js"( defer)?><\/script>\s*/, '');
 
 const out = `<title>${title}</title>
 ${fonts}
@@ -18,6 +20,7 @@ ${css}
 </style>
 ${body}
 <script>
+${cfg}
 ${js}
 </script>
 `;
