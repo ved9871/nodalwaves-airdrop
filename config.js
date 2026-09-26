@@ -10,9 +10,10 @@
 window.NW_CONFIG = {
 
   brand: {
-    name: 'NodalWaves',
-    slogan: 'Power the Next Wave.',
-    campaign: 'Start small. Stay for the journey.',
+    name: 'Nodal Gateway',                       // this landing page / entry program
+    tagline: 'Start Small. Enter the Ecosystem.',
+    ecosystem: 'NodalWaves',                     // the ecosystem the gateway leads into
+    ecosystemSlogan: 'Power the Next Wave.',
     token: 'NODAL',
     network: 'Polygon'
   },
