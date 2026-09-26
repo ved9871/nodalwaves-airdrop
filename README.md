@@ -1,10 +1,10 @@
-# NodalWaves — landing page
+# Nodal Gateway — landing page
 
-**Start small. Stay for the journey. Power the Next Wave.**
+**Start Small. Enter the Ecosystem.**
 
-Static, mobile-first landing page that positions the $10 NODAL entry as the first step into the
-NodalWaves ecosystem (identity, learning, participation, future utility), with the optional
-Community Partner program on its own page.
+Static, mobile-first landing page for **Nodal Gateway**, the $10 NODAL entry point into the NodalWaves
+ecosystem (identity, learning, participation, future utility), with the optional Community Partner
+program on its own page.
 
 No build step. Open `index.html` or serve the folder as-is (GitHub Pages, Cloudflare Pages, any static host).
 
@@ -16,7 +16,7 @@ styles.css          design system + components, mobile-first (390px base → 760
 community.css       components used only by community.html (level explorer, ranks, ledger)
 main.js             calculator, rails, tabs, journey dialog, mobile menu, launch-list forms, scroll reveals
 community.js        level-unlock explorer (reads config.community)
-assets/             official NodalWaves badge (64 / 192 / 512 / 1024) + favicon
+assets/             Nodal Gateway lockup + badge (64 / 192 / 512, favicon); NodalWaves badge (64 / 192 / 512 / 1024) used in the Passport previews
 banners/            banners.html (source for all sizes) + exported PNGs
 preview/            shoot.mjs (Playwright screenshots) + desktop / mobile captures
 build-artifact.mjs  inlines CSS/JS/config into dist/artifact.html for single-file previews
@@ -24,7 +24,7 @@ build-artifact.mjs  inlines CSS/JS/config into dist/artifact.html for single-fil
 
 ## Page story (in order)
 
-1. Hero — *Start small. Stay for the journey.* Passport preview card, no program mechanics.
+1. Hero — *Start small. Enter the ecosystem.* Passport preview card, no program mechanics.
 2. Why we're building NodalWaves — purpose before mechanics.
 3. What can $10 start? — spending vs participating.
 4. How it works — three steps: get NODAL, commit, receive promotional NODAL.
@@ -42,6 +42,7 @@ build-artifact.mjs  inlines CSS/JS/config into dist/artifact.html for single-fil
 
 - **Copy** lives in `index.html` / `community.html` as plain semantic markup. Each section starts with a
   `<!-- ==== N. NAME ==== -->` comment.
+- **Brand** (`config.brand`): Nodal Gateway is the page / entry program; NodalWaves is the ecosystem it leads into.
 - **Numbers and rules** live in `config.js`. The entry amount and commitment months are injected wherever the
   markup carries `data-cfg="entry.amount"` / `data-cfg="entry.months"`, so they only need changing once.
 - **Price source** (`config.price.source`): `placeholder` (development placeholder, labelled on the page),
