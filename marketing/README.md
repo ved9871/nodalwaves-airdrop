@@ -6,7 +6,9 @@ Everything needed to launch gateway.nodalwaves.com on social, in community chann
 
 ```
 marketing/
-  playbook/LAUNCH-PLAYBOOK.md     the plan: message, rules, channels, calendar, UTMs, roles, checklist
+  playbook/LAUNCH-PLAYBOOK.md     the plan: message, rules, channels, calendar, UTMs, roles, checklist (text source)
+  playbook/Nodal-Gateway-Launch-Playbook.pdf   the designed, shareable version (11 pages, A4)
+  playbook/playbook.html + build-pdf.mjs       PDF source and build script
   copy/captions.md                captions for every asset, per platform
   copy/messages.md                Telegram, WhatsApp, DM, partner note, support replies, email
   copy/launch-video.srt           subtitles for the launch video
@@ -21,6 +23,11 @@ marketing/
 ```
 
 ## Re-rendering
+
+Playbook PDF (from the repository root; needs the poster PNGs):
+```
+node marketing/playbook/build-pdf.mjs
+```
 
 Posters (from the repository root):
 ```
