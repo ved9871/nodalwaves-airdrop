@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nodal Gateway launch posters</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Measured Signal: graphite ground · silver voice · one crimson signal · clinical labels */
+:root{--void:#050507;--hull:#0E1014;--line:#20232A;--line2:#2C3038;--crimson:#CE0E2D;--hot:#FF2E4C;--chrome:#C6CDD6;--chrome2:#8F96A0;--text:#F4F5F7;--body:#A3AAB4;--muted:#6B727C;
+ --display:"Big Shoulders Display",Impact,sans-serif;--body-font:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#222;font-family:var(--body-font);display:flex;flex-direction:column;gap:40px;padding:40px;color:var(--body)}
+.canvas{position:relative;overflow:hidden;background:var(--void);flex:none;--pad:96px}
+.canvas.sq{width:1080px;height:1080px}
+.canvas.vt{width:1080px;height:1920px;--pad:88px}
+.canvas.ls{width:1920px;height:1080px;--pad:104px}
+/* ground: draughting grid fading to the edges + one soft glow */
+.canvas::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(206,14,45,.07) 0 1px,transparent 1px 56px),
+  repeating-linear-gradient(0deg,rgba(206,14,45,.07) 0 1px,transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000 20%,transparent 100%);mask-image:radial-gradient(70% 70% at 50% 45%,#000 20%,transparent 100%)}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(206,14,45,.42) 0%,rgba(206,14,45,0) 65%);pointer-events:none}
+.vignette{position:absolute;inset:0;background:radial-gradient(90% 90% at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%);pointer-events:none}
+.in{position:absolute;inset:var(--pad);display:flex;flex-direction:column}
+.display{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.005em;color:var(--text);margin:0}
+.chrome{background:linear-gradient(180deg,#FFFFFF 0%,#D7DCE3 42%,#8D949E 58%,#E9ECF0 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.red{background:linear-gradient(180deg,#FF5C74 0%,#E0122F 55%,#9E0A22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--chrome2);font-size:17px;margin:0}
+.mono.dim{color:var(--muted)}
+.lede{font-family:var(--body-font);font-size:30px;line-height:1.4;color:var(--body);margin:0;max-width:30ch}
+.lede b{color:var(--text);font-weight:600}
+.lockup{display:block;width:auto;height:60px}
+.url{font-family:var(--mono);font-size:26px;letter-spacing:.04em;color:var(--text);display:inline-flex;align-items:center;gap:18px;border:1px solid var(--chrome2);border-radius:999px;padding:16px 30px;background:rgba(14,16,20,.85)}
+.url i{width:12px;height:12px;border-radius:50%;background:var(--hot);box-shadow:0 0 16px var(--hot)}
+.url small{font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:var(--hot)}
+.fine{font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:var(--muted);line-height:1.5;margin:0}
+/* index marks: tiny clinical labels pinned to the corners */
+.idx{position:absolute;font-family:var(--mono);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.idx.tl{left:var(--pad);top:40px}.idx.tr{right:var(--pad);top:40px}.idx.bl{left:var(--pad);bottom:40px}.idx.br{right:var(--pad);bottom:40px}
+.rule{height:1px;background:var(--line2);position:relative}
+.rule::before,.rule::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--chrome2)}
+.rule::before{left:0}.rule::after{right:0}
+.sigline{height:2px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 18px rgba(255,46,76,.7)}
+svg.art{display:block;overflow:visible}
+svg.arches{margin-bottom:28px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.bottom{margin-top:auto;display:flex;flex-direction:column;gap:22px}
+.row{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+/* steps as a measured scale */
+.scale{display:flex;flex-direction:column;gap:0;border-left:1px solid var(--line2);padding-left:38px;position:relative}
+.scale .tick{position:relative;padding:30px 0 30px 0;border-bottom:1px solid var(--line)}
+.scale .tick:last-child{border-bottom:0}
+.scale .tick::before{content:"";position:absolute;left:-39px;top:50%;width:18px;height:1px;background:var(--chrome2)}
+.scale .tick.sig::before{background:var(--hot);box-shadow:0 0 10px var(--hot);height:2px}
+.scale .n{font-family:var(--mono);font-size:16px;letter-spacing:.24em;color:var(--chrome2)}
+.scale .tick.sig .n{color:var(--hot)}
+.scale h3{font-family:var(--display);font-weight:800;font-size:58px;text-transform:uppercase;letter-spacing:.01em;line-height:.95;color:var(--text);margin:8px 0 10px}
+.scale p{font-family:var(--body-font);font-size:24px;color:var(--body);margin:0;max-width:34ch}
+/* ecosystem path */
+.eco{display:flex;flex-direction:column;gap:22px;position:relative}
+.eco::before{content:"";position:absolute;left:35px;top:36px;bottom:36px;width:1px;background:var(--line2)}
+.node{display:flex;align-items:center;gap:26px;position:relative}
+.node i{width:72px;height:72px;border-radius:50%;border:1px solid var(--line2);background:var(--hull);display:flex;align-items:center;justify-content:center;flex:none;position:relative;z-index:1}
+.node i svg{width:30px;height:30px;stroke:var(--chrome2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.node span{font-family:var(--display);font-weight:800;font-size:44px;text-transform:uppercase;letter-spacing:.01em;color:var(--chrome)}
+.node small{font-family:var(--mono);font-size:13px;letter-spacing:.22em;color:var(--muted);margin-left:auto}
+.node.sig i{border-color:var(--hot);box-shadow:0 0 30px -4px var(--hot);background:linear-gradient(180deg,#2A1218,var(--hull))}
+.node.sig i svg{stroke:#fff}
+.node.sig span{color:var(--text)}
+.eco.h{flex-direction:row;align-items:flex-start;gap:0}
+.eco.h::before{left:36px;right:36px;top:35px;bottom:auto;height:1px;width:auto}
+.eco.h .node{flex:1;flex-direction:column;align-items:flex-start;gap:18px}
+.eco.h .node span{font-size:30px;padding-right:12px}
+.eco.h .node small{margin-left:0}
+/* no-hype list */
+.list{display:flex;flex-direction:column}
+.list div{display:flex;align-items:center;gap:22px;padding:18px 0;border-top:1px solid var(--line);font-family:var(--body-font);font-size:32px;color:var(--text)}
+.list div:last-child{border-bottom:1px solid var(--line)}
+.list .x{width:16px;height:16px;flex:none;background:linear-gradient(45deg,transparent 42%,var(--chrome) 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,var(--chrome) 42% 58%,transparent 58%)}
+.list .o{width:16px;height:16px;flex:none;border-radius:50%;background:var(--chrome);box-shadow:0 0 0 4px rgba(198,205,214,.15)}
+</style>
+</head>
+<body>
+
+<!-- ============ P1 · THE GATEWAY ============ -->
+<div class="canvas sq" id="p1-sq" data-name="01-gateway-square-1080x1080">
+  <div class="glow" style="width:1100px;height:1100px;left:50%;top:70%;transform:translate(-50%,-50%)"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 01 · Entry</span><span class="idx tr">Plate 1 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt=""><p class="mono">Now live</p></div>
+    <svg class="art arches" data-w="888" data-h="230" style="margin:30px auto 0"></svg>
+    <div class="bottom" style="gap:26px">
+      <h1 class="display" style="font-size:118px">Start small.<br><span class="chrome">Enter the ecosystem.</span></h1>
+      <div class="row" style="align-items:center"><p class="lede" style="font-size:27px;max-width:24ch">Your entry into the NodalWaves ecosystem can start with <b>$10 in NODAL</b>.</p><span class="url" style="font-size:23px;padding:14px 24px"><i></i>gateway.nodalwaves.com</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="canvas vt" id="p1-vt" data-name="01-gateway-vertical-1080x1920">
+  <div class="glow" style="width:1300px;height:1300px;left:50%;top:48%;transform:translate(-50%,-50%)"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 01 · Entry</span><span class="idx tr">Plate 1 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt=""><p class="mono">Now live</p></div>
+    <svg class="art arches" data-w="904" data-h="470" style="margin:80px auto 0"></svg>
+    <div class="bottom" style="gap:30px">
+      <h1 class="display" style="font-size:168px">Start small.<br><span class="chrome">Enter the ecosystem.</span></h1>
+      <p class="lede" style="font-size:34px;max-width:28ch">Your entry into the NodalWaves ecosystem can start with <b>$10 in NODAL</b>.</p>
+      <span class="url" style="align-self:flex-start;font-size:30px"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+    </div>
+  </div>
+</div>
+
+<div class="canvas ls" id="p1-ls" data-name="01-gateway-landscape-1920x1080">
+  <div class="glow" style="width:1300px;height:1300px;left:72%;top:55%;transform:translate(-50%,-50%)"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 01 · Entry</span><span class="idx tr">Plate 1 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="flex-direction:row;align-items:stretch;gap:80px">
+    <div style="flex:1 1 52%;display:flex;flex-direction:column">
+      <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:64px;align-self:flex-start">
+      <div class="bottom" style="gap:34px">
+        <h1 class="display" style="font-size:150px">Start small.<br><span class="chrome">Enter the ecosystem.</span></h1>
+        <p class="lede">Your entry into the NodalWaves ecosystem can start with <b>$10 in NODAL</b>.</p>
+        <span class="url" style="align-self:flex-start"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+      </div>
+    </div>
+    <div style="flex:1 1 48%;display:flex;align-items:center;justify-content:center"><svg class="art arches" data-w="760" data-h="560"></svg></div>
+  </div>
+</div>
+
+<!-- ============ P2 · TEN DOLLARS ============ -->
+<div class="canvas sq" id="p2-sq" data-name="02-ten-dollars-square-1080x1080">
+  <div class="glow" style="width:900px;height:900px;left:28%;top:40%;transform:translate(-50%,-50%);opacity:.8"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 02 · Scale</span><span class="idx tr">Plate 2 / 6</span><span class="idx bl">One qualifying purchase</span><span class="idx br">gateway.nodalwaves.com</span>
+  <div class="in">
+    <div class="top"><p class="mono">Spending vs participating</p><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"></div>
+    <div class="row" style="align-items:center;margin-top:40px">
+      <h1 class="display chrome" style="font-size:380px;line-height:.82">$10</h1>
+      <svg class="art dots" data-cols="9" data-rows="9" data-cell="40" data-sig="4,4"></svg>
+    </div>
+    <div class="bottom">
+      <div class="rule"></div>
+      <div class="row"><p class="lede">A coffee run is over in a minute. The same $10 can be your first committed NODAL position inside an ecosystem you choose to explore.</p><p class="mono" style="text-align:right">Your entry into<br>the NodalWaves<br>ecosystem</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="canvas vt" id="p2-vt" data-name="02-ten-dollars-vertical-1080x1920">
+  <div class="glow" style="width:1200px;height:1200px;left:50%;top:38%;transform:translate(-50%,-50%);opacity:.8"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 02 · Scale</span><span class="idx tr">Plate 2 / 6</span><span class="idx bl">One qualifying purchase</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><p class="mono">Spending vs participating</p><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"></div>
+    <svg class="art dots" data-cols="11" data-rows="7" data-cell="44" data-sig="5,3" style="margin:70px auto 0"></svg>
+    <h1 class="display chrome" style="font-size:470px;line-height:.82;margin-top:50px">$10</h1>
+    <p class="mono" style="margin-top:26px">Your entry into the NodalWaves ecosystem</p>
+    <div class="bottom" style="gap:30px">
+      <div class="rule"></div>
+      <p class="lede" style="font-size:34px;max-width:26ch">A coffee run is over in a minute. The same $10 can be your first committed NODAL position.</p>
+      <span class="url" style="align-self:flex-start;font-size:30px"><i></i>gateway.nodalwaves.com</span>
+    </div>
+  </div>
+</div>
+
+<div class="canvas ls" id="p2-ls" data-name="02-ten-dollars-landscape-1920x1080">
+  <div class="glow" style="width:1200px;height:1200px;left:30%;top:50%;transform:translate(-50%,-50%);opacity:.8"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 02 · Scale</span><span class="idx tr">Plate 2 / 6</span><span class="idx bl">One qualifying purchase</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="flex-direction:row;gap:90px;align-items:center">
+    <h1 class="display chrome" style="font-size:560px;line-height:.82;flex:none">$10</h1>
+    <div style="flex:1;display:flex;flex-direction:column;height:100%">
+      <div class="top"><p class="mono">Spending vs participating</p><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:56px"></div>
+      <svg class="art dots" data-cols="13" data-rows="5" data-cell="40" data-sig="6,2" style="margin:48px 0 0"></svg>
+      <div class="bottom" style="gap:28px">
+        <p class="lede" style="font-size:32px;max-width:34ch">A coffee run is over in a minute. The same $10 can be your first committed NODAL position inside an ecosystem you choose to explore.</p>
+        <span class="url" style="align-self:flex-start"><i></i>gateway.nodalwaves.com</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P3 · THREE STEPS ============ -->
+<div class="canvas sq" id="p3-sq" data-name="03-three-steps-square-1080x1080">
+  <div class="glow" style="width:1000px;height:1000px;left:80%;top:30%;transform:translate(-50%,-50%);opacity:.7"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 03 · Sequence</span><span class="idx tr">Plate 3 / 6</span><span class="idx bl">Token units, never a dollar promise</span><span class="idx br">gateway.nodalwaves.com</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">How it works</p></div>
+    <h1 class="display" style="font-size:112px;margin-top:40px">Three <span class="chrome">simple steps.</span></h1>
+    <div class="scale" style="margin-top:44px">
+      <div class="tick"><span class="n">01</span><h3>Get NODAL</h3><p>A qualifying $10 purchase of NODAL.</p></div>
+      <div class="tick"><span class="n">02</span><h3>Commit</h3><p>Keep it committed for the 24-month participation period.</p></div>
+      <div class="tick sig"><span class="n">03</span><h3>Receive promotional NODAL</h3><p>An additional allocation equal to the quantity you purchased.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="canvas vt" id="p3-vt" data-name="03-three-steps-vertical-1080x1920">
+  <div class="glow" style="width:1200px;height:1200px;left:85%;top:25%;transform:translate(-50%,-50%);opacity:.7"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 03 · Sequence</span><span class="idx tr">Plate 3 / 6</span><span class="idx bl">Token units, never a dollar promise</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">How it works</p></div>
+    <h1 class="display" style="font-size:150px;margin-top:90px">Three <span class="chrome">simple steps.</span></h1>
+    <div class="scale" style="margin-top:80px">
+      <div class="tick" style="padding:44px 0"><span class="n">01</span><h3 style="font-size:66px">Get NODAL</h3><p style="font-size:28px">A qualifying $10 purchase of NODAL.</p></div>
+      <div class="tick" style="padding:44px 0"><span class="n">02</span><h3 style="font-size:66px">Commit</h3><p style="font-size:28px">Keep it committed for the 24-month participation period.</p></div>
+      <div class="tick sig" style="padding:44px 0"><span class="n">03</span><h3 style="font-size:66px">Receive promotional NODAL</h3><p style="font-size:28px">An additional allocation equal to the quantity you purchased.</p></div>
+    </div>
+    <div class="bottom"><span class="url" style="align-self:flex-start;font-size:30px"><i></i>gateway.nodalwaves.com</span></div>
+  </div>
+</div>
+
+<div class="canvas ls" id="p3-ls" data-name="03-three-steps-landscape-1920x1080">
+  <div class="glow" style="width:1200px;height:1200px;left:15%;top:60%;transform:translate(-50%,-50%);opacity:.7"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 03 · Sequence</span><span class="idx tr">Plate 3 / 6</span><span class="idx bl">Token units, never a dollar promise</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="flex-direction:row;gap:100px">
+    <div style="flex:1 1 44%;display:flex;flex-direction:column">
+      <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:56px;align-self:flex-start">
+      <div class="bottom" style="gap:30px">
+        <p class="mono">How it works</p>
+        <h1 class="display" style="font-size:140px">Three <span class="chrome">simple steps.</span></h1>
+        <span class="url" style="align-self:flex-start"><i></i>gateway.nodalwaves.com</span>
+      </div>
+    </div>
+    <div class="scale" style="flex:1 1 56%;justify-content:center">
+      <div class="tick"><span class="n">01</span><h3>Get NODAL</h3><p>A qualifying $10 purchase of NODAL.</p></div>
+      <div class="tick"><span class="n">02</span><h3>Commit</h3><p>Keep it committed for the 24-month participation period.</p></div>
+      <div class="tick sig"><span class="n">03</span><h3>Receive promotional NODAL</h3><p>An additional allocation equal to the quantity you purchased.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P4 · ECOSYSTEM ============ -->
+<div class="canvas sq" id="p4-sq" data-name="04-ecosystem-square-1080x1080">
+  <div class="glow" style="width:900px;height:900px;left:20%;top:45%;transform:translate(-50%,-50%);opacity:.75"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 04 · Map</span><span class="idx tr">Plate 4 / 6</span><span class="idx bl">Layers roll out in phases</span><span class="idx br">gateway.nodalwaves.com</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">The NodalWaves ecosystem</p></div>
+    <div class="eco" style="margin-top:44px" data-eco></div>
+    <div class="bottom" style="gap:16px">
+      <h1 class="display" style="font-size:70px">Your $10 is the entry point.<br><span class="chrome">The ecosystem is the journey.</span></h1>
+    </div>
+  </div>
+</div>
+
+<div class="canvas vt" id="p4-vt" data-name="04-ecosystem-vertical-1080x1920">
+  <div class="glow" style="width:1200px;height:1200px;left:20%;top:40%;transform:translate(-50%,-50%);opacity:.75"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 04 · Map</span><span class="idx tr">Plate 4 / 6</span><span class="idx bl">Layers roll out in phases</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">The NodalWaves ecosystem</p></div>
+    <div class="eco" style="margin-top:90px;gap:34px" data-eco></div>
+    <div class="bottom" style="gap:30px">
+      <h1 class="display" style="font-size:104px">Your $10 is the entry point.<br><span class="chrome">The ecosystem is the journey.</span></h1>
+      <span class="url" style="align-self:flex-start;font-size:30px"><i></i>gateway.nodalwaves.com</span>
+    </div>
+  </div>
+</div>
+
+<div class="canvas ls" id="p4-ls" data-name="04-ecosystem-landscape-1920x1080">
+  <div class="glow" style="width:1200px;height:1200px;left:12%;top:50%;transform:translate(-50%,-50%);opacity:.75"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 04 · Map</span><span class="idx tr">Plate 4 / 6</span><span class="idx bl">Layers roll out in phases</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:56px"><p class="mono">The NodalWaves ecosystem</p></div>
+    <div class="eco h" style="margin-top:70px" data-eco></div>
+    <div class="bottom">
+      <div class="row">
+        <h1 class="display" style="font-size:118px">Your $10 is the entry point.<br><span class="chrome">The ecosystem is the journey.</span></h1>
+        <span class="url"><i></i>gateway.nodalwaves.com</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P5 · NO HYPE ============ -->
+<div class="canvas sq" id="p5-sq" data-name="05-no-hype-square-1080x1080">
+  <div class="glow" style="width:900px;height:900px;left:85%;top:85%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 05 · Terms</span><span class="idx tr">Plate 5 / 6</span><span class="idx bl">Read before you start</span><span class="idx br">gateway.nodalwaves.com</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">Trust &amp; transparency</p></div>
+    <h1 class="display" style="font-size:230px;margin-top:40px">No hype.</h1>
+    <div class="sigline" style="width:300px;margin:18px 0 10px"></div>
+    <h2 class="display chrome" style="font-size:66px">Know what you're joining.</h2>
+    <div class="bottom">
+      <div class="list">
+        <div><span class="o"></span>A $10 entry and a 24-month commitment</div>
+        <div><span class="o"></span>Promotional NODAL of the same quantity</div>
+        <div><span class="x"></span>Not guaranteed income</div>
+        <div><span class="x"></span>Not a promise of a future token price</div>
+      </div>
+      <p class="fine">Crypto assets can rise or fall in value. Understand the program, the token and the conditions before you participate.</p>
+    </div>
+  </div>
+</div>
+
+<div class="canvas vt" id="p5-vt" data-name="05-no-hype-vertical-1080x1920">
+  <div class="glow" style="width:1200px;height:1200px;left:85%;top:80%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 05 · Terms</span><span class="idx tr">Plate 5 / 6</span><span class="idx bl">Read before you start</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:52px"><p class="mono">Trust &amp; transparency</p></div>
+    <h1 class="display" style="font-size:300px;margin-top:110px">No hype.</h1>
+    <div class="sigline" style="width:320px;margin:26px 0 14px"></div>
+    <h2 class="display chrome" style="font-size:84px">Know what you're joining.</h2>
+    <div class="bottom" style="gap:30px">
+      <div class="list" style="font-size:36px">
+        <div style="font-size:36px;padding:24px 0"><span class="o"></span>A $10 entry and a 24-month commitment</div>
+        <div style="font-size:36px;padding:24px 0"><span class="o"></span>Promotional NODAL of the same quantity</div>
+        <div style="font-size:36px;padding:24px 0"><span class="x"></span>Not guaranteed income</div>
+        <div style="font-size:36px;padding:24px 0"><span class="x"></span>Not a promise of a future token price</div>
+      </div>
+      <div class="row"><p class="fine" style="max-width:40ch">Crypto assets can rise or fall in value. Understand the program, the token and the conditions before you participate.</p><span class="url" style="font-size:26px"><i></i>gateway.nodalwaves.com</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="canvas ls" id="p5-ls" data-name="05-no-hype-landscape-1920x1080">
+  <div class="glow" style="width:1200px;height:1200px;left:88%;top:80%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 05 · Terms</span><span class="idx tr">Plate 5 / 6</span><span class="idx bl">Read before you start</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="flex-direction:row;gap:100px">
+    <div style="flex:1 1 50%;display:flex;flex-direction:column">
+      <div class="top"><img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:56px"></div>
+      <div class="bottom" style="gap:18px">
+        <p class="mono">Trust &amp; transparency</p>
+        <h1 class="display" style="font-size:250px">No hype.</h1>
+        <div class="sigline" style="width:300px;margin:6px 0 6px"></div>
+        <h2 class="display chrome" style="font-size:72px">Know what you're joining.</h2>
+      </div>
+    </div>
+    <div style="flex:1 1 50%;display:flex;flex-direction:column;justify-content:flex-end;gap:30px">
+      <div class="list">
+        <div><span class="o"></span>A $10 entry and a 24-month commitment</div>
+        <div><span class="o"></span>Promotional NODAL of the same quantity</div>
+        <div><span class="x"></span>Not guaranteed income</div>
+        <div><span class="x"></span>Not a promise of a future token price</div>
+      </div>
+      <div class="row"><p class="fine" style="max-width:44ch">Crypto assets can rise or fall in value. Understand the program, the token and the conditions before you participate.</p><span class="url"><i></i>gateway.nodalwaves.com</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P6 · LIVE NOW ============ -->
+<div class="canvas sq" id="p6-sq" data-name="06-live-now-square-1080x1080">
+  <div class="glow" style="width:1200px;height:1200px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.9"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 06 · Open</span><span class="idx tr">Plate 6 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="align-items:center;text-align:center;justify-content:center;gap:40px">
+    <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:110px">
+    <svg class="art arches" data-w="760" data-h="190"></svg>
+    <h1 class="display" style="font-size:150px">The entry <span class="chrome">is open.</span></h1>
+    <span class="url" style="font-size:34px;padding:22px 40px"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+  </div>
+</div>
+
+<div class="canvas vt" id="p6-vt" data-name="06-live-now-vertical-1080x1920">
+  <div class="glow" style="width:1400px;height:1400px;left:50%;top:55%;transform:translate(-50%,-50%);opacity:.9"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 06 · Open</span><span class="idx tr">Plate 6 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="align-items:center;text-align:center;justify-content:center;gap:60px">
+    <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:120px">
+    <svg class="art arches" data-w="880" data-h="400"></svg>
+    <h1 class="display" style="font-size:190px">The entry <span class="chrome">is open.</span></h1>
+    <p class="lede" style="text-align:center;max-width:26ch;font-size:34px">Start small. Enter the ecosystem. Your first step can be <b>$10 in NODAL</b>.</p>
+    <span class="url" style="font-size:34px;padding:22px 40px"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+  </div>
+</div>
+
+<div class="canvas ls" id="p6-ls" data-name="06-live-now-landscape-1920x1080">
+  <div class="glow" style="width:1400px;height:1400px;left:50%;top:60%;transform:translate(-50%,-50%);opacity:.9"></div>
+  <div class="vignette"></div>
+  <span class="idx tl">Fig. 06 · Open</span><span class="idx tr">Plate 6 / 6</span><span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in" style="align-items:center;text-align:center;justify-content:center;gap:34px">
+    <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="" style="height:100px">
+    <svg class="art arches" data-w="1000" data-h="170"></svg>
+    <h1 class="display" style="font-size:170px">The entry <span class="chrome">is open.</span></h1>
+    <span class="url" style="font-size:36px;padding:22px 42px"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+  </div>
+</div>
+
+<script>
+/* Patterns are generated so every interval is exact: nested arches (the gateway), the dot field
+   with one lit signal, and the ecosystem path. */
+const NS = 'http://www.w3.org/2000/svg';
+const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+/* nested arches receding toward a vanishing point; each is a semi-ellipse that always lands on the baseline,
+   shrinking by a fixed ratio; the innermost opening carries the light */
+document.querySelectorAll('svg.arches').forEach(svg => {
+  const W = +svg.dataset.w, H = +svg.dataset.h, n = 7, r = 0.84;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+  const baseY = H - 2;
+  for (let i = 0; i < n; i++) {
+    const k = Math.pow(r, i), w = W * k, h = (H - 4) * k, x = (W - w) / 2;
+    const d = `M ${x} ${baseY} A ${w / 2} ${h} 0 0 1 ${x + w} ${baseY}`;
+    svg.appendChild(el('path', { d, fill: 'none', stroke: i === n - 1 ? '#FF2E4C' : '#8F96A0', 'stroke-width': i === n - 1 ? 1.6 : 1.1, opacity: i === n - 1 ? 1 : 0.28 + i * 0.1 }));
+  }
+  const kin = Math.pow(r, n - 1), win = W * kin, xin = (W - win) / 2;
+  svg.appendChild(el('line', { x1: xin, y1: baseY, x2: xin + win, y2: baseY, stroke: '#FF2E4C', 'stroke-width': 3, style: 'filter:drop-shadow(0 0 12px rgba(255,46,76,.9))' }));
+  svg.appendChild(el('line', { x1: 0, y1: baseY, x2: W, y2: baseY, stroke: '#2C3038', 'stroke-width': 1 }));
+  for (let t = 0; t <= 8; t++) svg.appendChild(el('line', { x1: W * t / 8, y1: baseY + 6, x2: W * t / 8, y2: baseY + (t % 4 === 0 ? 18 : 11), stroke: '#6B727C', 'stroke-width': 1 }));
+});
+
+/* a field of small dots, one lit: start small */
+document.querySelectorAll('svg.dots').forEach(svg => {
+  const cols = +svg.dataset.cols, rows = +svg.dataset.rows, cell = +svg.dataset.cell, [sx, sy] = svg.dataset.sig.split(',').map(Number);
+  const W = cols * cell, H = rows * cell;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    const sig = x === sx && y === sy;
+    svg.appendChild(el('circle', { cx: x * cell + cell / 2, cy: y * cell + cell / 2, r: sig ? 7 : 3, fill: sig ? '#FF2E4C' : '#2C3038', style: sig ? 'filter:drop-shadow(0 0 14px rgba(255,46,76,1))' : '' }));
+  }
+});
+
+/* ecosystem path */
+const ICON = {
+  token: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM7 13c1.6-2.4 3.2-2.4 4.8 0s3.2 2.4 4.8 0',
+  passport: 'M7 3h10a2.5 2.5 0 0 1 2.5 2.5v13A2.5 2.5 0 0 1 17 21H7a2.5 2.5 0 0 1-2.5-2.5v-13A2.5 2.5 0 0 1 7 3zM12 7.4a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2zM8.5 17h7',
+  quest: 'M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z',
+  stake: 'M12 4l8 4-8 4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4',
+  nodes: 'M6 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM18 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM12 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM8 16.2l3-7.8M16 16.2l-3-7.8M8.5 18h7',
+  market: 'M4 8h16l-1.4 11.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8zM9 8V6a3 3 0 0 1 6 0v2',
+  game: 'M7 7h10a4.5 4.5 0 0 1 4.5 4.5v1A4.5 4.5 0 0 1 17 17h-.8l-2-2h-4.4l-2 2H7a4.5 4.5 0 0 1-4.5-4.5v-1A4.5 4.5 0 0 1 7 7zM8 10.5v3M6.5 12h3M15.5 11.2h.01M17.6 13h.01'
+};
+const ECO = [['token', '$NODAL', '01'], ['passport', 'Nodal Passport', '02'], ['quest', 'Nodal Quest', '03'], ['stake', 'Staking & participation', '04'], ['nodes', 'Nodes', '05'], ['market', 'Marketplace & utility', '06'], ['game', 'Future gaming', '07']];
+document.querySelectorAll('[data-eco]').forEach(box => {
+  ECO.forEach(([ic, label, n], i) => {
+    const d = document.createElement('div'); d.className = 'node' + (i === 0 ? ' sig' : '');
+    d.innerHTML = `<i><svg viewBox="0 0 24 24"><path d="${ICON[ic]}"/></svg></i><span>${label}</span><small>${n}</small>`;
+    box.appendChild(d);
+  });
+});
+</script>
+</body>
+</html>
