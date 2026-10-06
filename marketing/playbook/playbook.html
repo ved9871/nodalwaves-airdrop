@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nodal Gateway · Launch Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Measured Signal, print edition: graphite ground · silver voice · one crimson signal per page · clinical labels */
+:root{--void:#050507;--hull:#0E1014;--hull2:#14171D;--line:#20232A;--line2:#2C3038;--crimson:#CE0E2D;--hot:#FF2E4C;--chrome:#C6CDD6;--chrome2:#8F96A0;--text:#F4F5F7;--body:#A3AAB4;--muted:#6B727C;
+ --display:"Big Shoulders Display",Impact,sans-serif;--sans:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",Consolas,monospace}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:#1a1a1d}
+body{font-family:var(--sans);color:var(--body);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+p{margin:0}
+.page{position:relative;width:210mm;height:297mm;background:var(--void);overflow:hidden;page-break-after:always;break-after:page;color:var(--body)}
+.page:last-child{page-break-after:auto;break-after:auto}
+.page::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(206,14,45,.07) 0 1px,transparent 1px 48px),
+  repeating-linear-gradient(0deg,rgba(206,14,45,.07) 0 1px,transparent 1px 48px);
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 40%,#000 15%,transparent 100%);mask-image:radial-gradient(70% 60% at 50% 40%,#000 15%,transparent 100%)}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(206,14,45,.40) 0%,rgba(206,14,45,0) 65%);pointer-events:none}
+.vig{position:absolute;inset:0;background:radial-gradient(90% 90% at 50% 50%,transparent 55%,rgba(0,0,0,.5) 100%);pointer-events:none}
+.in{position:absolute;left:48px;right:48px;top:80px;bottom:72px;display:flex;flex-direction:column}
+.idx{position:absolute;font:500 8.5px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.tl{left:48px;top:36px}.tr{right:48px;top:36px}.bl{left:48px;bottom:36px}.br{right:48px;bottom:36px}
+.ph{display:flex;align-items:flex-end;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line2);margin-bottom:20px}
+.ph .n{font:500 11px/1 var(--mono);letter-spacing:.26em;color:var(--hot);padding-bottom:6px}
+.ph h2{font:900 44px/.92 var(--display);text-transform:uppercase;color:var(--text);letter-spacing:-.005em;margin:0}
+.ph h2 em{font-style:normal;color:var(--chrome)}
+.ph .right{margin-left:auto;font:500 9px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding-bottom:6px}
+.display{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.005em;color:var(--text);margin:0}
+.chrome{color:var(--chrome)}
+.red{color:var(--hot)}
+.lede{font-size:13.5px;line-height:1.55;color:var(--body);max-width:62ch}
+.lede b{color:var(--text);font-weight:600}
+.k{font:500 9px/1.4 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--chrome2);margin:0}
+h3.sub{font:800 21px/1 var(--display);text-transform:uppercase;color:var(--text);letter-spacing:.01em;margin:0 0 10px}
+.sec{margin-top:22px}
+table{width:100%;border-collapse:collapse;font-size:11px;line-height:1.4}
+th{text-align:left;font:500 8.5px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 10px 8px 0;border-bottom:1px solid var(--line2)}
+td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);color:var(--body);vertical-align:top}
+td:first-child{color:var(--text);font-weight:500}
+tr.sig td{color:var(--text)}tr.sig td:first-child{color:var(--hot)}
+tr.sig td:first-child::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hot);margin-right:8px;vertical-align:middle}
+.mono-td{font-family:var(--mono);font-size:9.5px;letter-spacing:.01em;color:var(--chrome2)!important}
+.card{border:1px solid var(--line2);border-radius:10px;padding:16px 18px;background:var(--hull)}
+.callout{border-left:2px solid var(--hot);padding:12px 16px;background:#1E0A10;color:var(--text);font-size:13.5px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+ul{list-style:none;margin:0;padding:0}
+ul.dots li,ul.xs li,ul.check li{position:relative;padding:7px 0 7px 22px;border-bottom:1px solid var(--line);font-size:12px;color:var(--text);line-height:1.4}
+ul.dots li::before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--chrome);box-shadow:0 0 0 3px #222326}
+ul.xs li::before{content:"×";position:absolute;left:0;top:5px;font:700 15px/1 var(--mono);color:var(--hot)}
+ul.check li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;border:1px solid var(--chrome2);border-radius:2px}
+ul.num{counter-reset:n}
+ul.num li{counter-increment:n;position:relative;padding:8px 0 8px 36px;border-bottom:1px solid var(--line);font-size:12px;color:var(--text);line-height:1.4}
+ul.num li::before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:10px;font:500 9.5px var(--mono);letter-spacing:.2em;color:var(--hot)}
+.pill{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--chrome2);border-radius:999px;padding:9px 16px;font:500 12px var(--mono);color:var(--text);background:var(--hull);white-space:nowrap}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--hot)}
+.pill small{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--hot)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-top:14px}
+.fine{font:9.5px/1.5 var(--mono);color:var(--muted);letter-spacing:.04em}
+.rule{height:1px;background:var(--line2);position:relative;margin:18px 0}
+.rule::before,.rule::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--chrome2)}
+.rule::before{left:0}.rule::after{right:0}
+.sigline{height:2px;background:var(--hot)}
+.lockup{display:block;height:auto}
+svg.art{display:block;overflow:visible}
+/* Two-pass PDF build. Pass 1 (body.bg-pass): only the decorative layer is painted and screenshotted per page.
+   Pass 2 (body.print-pass): that screenshot sits behind the page as one opaque image, and the decorative
+   layer is hidden, so the printed PDF carries no gradients, masks or shadows (web PDF viewers reject them). */
+.bgimg{display:none;position:absolute;inset:0;width:100%;height:100%}
+body.bg-pass .in *,body.bg-pass .idx{visibility:hidden}
+body.bg-pass .decor,body.bg-pass .decor *{visibility:visible}
+body.print-pass .bgimg{display:block}
+body.print-pass .decor{visibility:hidden}
+body.print-pass .glow,body.print-pass .vig,body.print-pass .page::before{display:none}
+/* contents */
+.toc{display:flex;flex-direction:column}
+.toc a{display:grid;grid-template-columns:34px 1fr auto;align-items:baseline;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text)}
+.toc .n{font:500 10px var(--mono);letter-spacing:.22em;color:var(--hot)}
+.toc .t{font:800 20px/1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.toc .pgn{font:500 10px var(--mono);letter-spacing:.14em;color:var(--muted)}
+/* posters grid */
+.posters{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 16px}
+.posters img{display:block;width:100%;height:auto;border:1px solid var(--line2);border-radius:6px}
+.posters figcaption{display:flex;flex-direction:column;gap:3px;margin-top:8px;font-size:10.5px;color:var(--muted)}
+.posters figcaption b{color:var(--text);font-weight:600;font-size:11.5px}
+.posters figcaption b .k{margin-right:8px;color:var(--hot)}
+.posters figure{margin:0}
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:12px}
+.flow::before{content:"";position:absolute;left:12%;right:12%;top:13px;height:1px;background:var(--line2)}
+.flow div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;position:relative}
+.flow i{width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);background:var(--hull);display:flex;align-items:center;justify-content:center;font:500 9px var(--mono);color:var(--chrome2)}
+.flow div:last-child i{border-color:var(--hot);color:#fff;background:#1C1116}
+.flow b{font:800 15px/1 var(--display);text-transform:uppercase;color:var(--text);letter-spacing:.02em}
+.flow span{font-size:10.5px;color:var(--muted);line-height:1.35;max-width:14ch}
+/* audience facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.facts div{background:var(--hull);padding:14px 14px 12px}
+.facts b{display:block;font:800 24px/1 var(--display);text-transform:uppercase;color:var(--text);margin-bottom:6px}
+.facts span{font-size:10.5px;line-height:1.4;color:var(--body)}
+/* tone strip */
+.tone{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tone div{border-top:1px solid var(--line2);padding-top:10px;font-size:11.5px;line-height:1.45;color:var(--body)}
+.tone b{display:block;color:var(--text);font-weight:600;margin-bottom:3px}
+pre{margin:0;font:10.5px/1.6 var(--mono);color:var(--chrome2);background:var(--hull);border:1px solid var(--line2);border-radius:8px;padding:14px 16px;white-space:pre}
+pre b{color:var(--text);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:500 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--chrome);border:1px solid var(--line2);border-radius:999px;padding:7px 11px}
+.chips span.sig{color:#fff;border-color:var(--hot);background:#1C1116}
+.rw{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.rw div{padding:9px 0;border-bottom:1px solid var(--line);font-size:11.5px;line-height:1.45}
+.rw .no{color:var(--chrome2);text-decoration:line-through;text-decoration-color:#C1243B;text-decoration-thickness:1px}
+.rw .yes{color:var(--text)}
+.rw .h{font:500 8.5px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--line2)}
+.rw .h.red{color:var(--hot)}
+</style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="page" id="cover">
+  <div class="glow" style="width:760px;height:760px;left:50%;top:46%;transform:translate(-50%,-50%)"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 00 · Cover</span><span class="idx tr">Internal · launch team and Community Partners</span>
+  <span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
+  <div class="in">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <img class="lockup decor" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:58px">
+      <p class="k" style="text-align:right">Launch playbook<br>v1.0 · October 2026</p>
+    </div>
+    <svg class="art arches decor" data-w="600" data-h="300" style="margin:74px auto 0"></svg>
+    <div style="margin-top:auto">
+      <h1 class="display" style="font-size:112px">Launch<br><span class="chrome">playbook.</span></h1>
+      <p class="lede" style="margin-top:22px;max-width:56ch">How to launch gateway.nodalwaves.com across social, community and press: one message, firm language rules, a 30-day calendar, and where every asset in the kit goes.</p>
+      <div class="foot" style="padding-top:26px">
+        <span class="pill"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+        <p class="fine" style="text-align:right">Start Small. Enter the Ecosystem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTENTS ============================== -->
+<section class="page">
+  <div class="glow" style="width:620px;height:620px;left:86%;top:20%;transform:translate(-50%,-50%);opacity:.7"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Contents</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 2 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">00</span><h2>What's <em>inside.</em></h2></div>
+    <nav class="toc">
+      <a><span class="n">01</span><span class="t">The one message</span><span class="pgn">Page 3</span></a>
+      <a><span class="n">02</span><span class="t">Who we're talking to</span><span class="pgn">Page 3</span></a>
+      <a><span class="n">03</span><span class="t">Language rules</span><span class="pgn">Page 4</span></a>
+      <a><span class="n">04</span><span class="t">The asset kit</span><span class="pgn">Page 5</span></a>
+      <a><span class="n">05</span><span class="t">Channels and cadence</span><span class="pgn">Page 6</span></a>
+      <a><span class="n">06</span><span class="t">The 30-day calendar</span><span class="pgn">Page 7</span></a>
+      <a><span class="n">07</span><span class="t">Tracking links</span><span class="pgn">Page 8</span></a>
+      <a><span class="n">08</span><span class="t">Roles and approval</span><span class="pgn">Page 8</span></a>
+      <a><span class="n">09</span><span class="t">Launch-day checklist</span><span class="pgn">Page 9</span></a>
+      <a><span class="n">10</span><span class="t">What we measure</span><span class="pgn">Page 9</span></a>
+      <a><span class="n">11</span><span class="t">Why we never say airdrop</span><span class="pgn">Page 10</span></a>
+      <a><span class="n">12</span><span class="t">If something goes wrong</span><span class="pgn">Page 10</span></a>
+    </nav>
+    <div class="card" style="margin-top:26px">
+      <p class="k" style="margin-bottom:10px">How to use this playbook</p>
+      <ul class="dots" style="font-size:12px">
+        <li>Everyone reads 01 and 03 first. They take five minutes and they decide what gets posted.</li>
+        <li>The person approving posts lives in 03 and 09. The person posting lives in 04, 05 and 06.</li>
+        <li>Community Partners receive 03 plus the partner note in the copy pack. Nothing else is required of them.</li>
+      </ul>
+    </div>
+    <div class="foot"><p class="fine">The copy pack (captions, messages, subtitles) and the PR pack (release, pitches, factsheet) ship alongside this document.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 01 + 02 ============================== -->
+<section class="page">
+  <div class="glow" style="width:700px;height:700px;left:20%;top:30%;transform:translate(-50%,-50%);opacity:.8"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 01 · Message</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 3 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">01</span><h2>The one <em>message.</em></h2></div>
+    <h3 class="display" style="font-size:72px">Start small.<br><span class="chrome">Enter the ecosystem.</span></h3>
+    <p class="lede" style="margin-top:18px">Everything in the launch points at a single idea: Nodal Gateway is the entry into the NodalWaves ecosystem, and it can start with <b>$10 in NODAL</b>. We sell the ecosystem and the first step. We do not sell the $10, the promotion, or any outcome.</p>
+    <div class="callout" style="margin-top:18px">If a post cannot be traced back to that sentence, it does not go out.</div>
+
+    <div class="ph" style="margin-top:36px"><span class="n">02</span><h2>Who we're <em>talking to.</em></h2></div>
+    <div class="facts">
+      <div><b>18 to 30</b><span>Digitally native, finding this on a phone.</span></div>
+      <div><b>Apps &amp; games</b><span>Comfortable with progression, XP and identity.</span></div>
+      <div><b>Small budgets</b><span>$10 is real money. Treat it that way.</span></div>
+      <div><b>Hype-tired</b><span>Good instincts for being shouted at by crypto.</span></div>
+    </div>
+    <p class="lede" style="margin-top:16px">Every asset is built to pass their first-glance test: calm, clear, specific, honest about risk. They may not know Web3 words, so we do not use them.</p>
+    <div class="card" style="margin-top:22px">
+      <p class="k" style="margin-bottom:12px">The journey we are designing for, in order</p>
+      <div class="chips"><span>Curiosity</span><span>Purpose</span><span>Small entry</span><span>Understanding</span><span>Ecosystem</span><span>Identity</span><span>Progress</span><span>Belonging</span><span>Trust</span><span class="sig">Action</span></div>
+      <p style="font-size:11.5px;line-height:1.5;color:var(--body);margin-top:12px">Not offer, referral, income, rank, buy. If a post skips straight to action, it is in the wrong order.</p>
+    </div>
+    <div class="foot"><p class="fine">Crypto assets involve risk. No guaranteed value or return.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 03 LANGUAGE ============================== -->
+<section class="page">
+  <div class="glow" style="width:700px;height:700px;left:85%;top:85%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 03 · Language</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 4 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">03</span><h2>Language <em>rules.</em></h2><span class="right">Non-negotiable</span></div>
+    <div class="two">
+      <div>
+        <h3 class="sub">Say</h3>
+        <ul class="dots">
+          <li>Nodal Gateway, the NodalWaves ecosystem, NODAL</li>
+          <li>"a qualifying $10 purchase of NODAL"</li>
+          <li>"committed for the 24-month participation period"</li>
+          <li>"promotional NODAL" or "an additional allocation equal to the quantity you purchased"</li>
+          <li>"layers roll out in phases; features, availability and timing may change"</li>
+          <li>"Crypto assets involve risk. No guaranteed value or return."</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub red">Never say</h3>
+        <ul class="xs">
+          <li>match, 1:1, matched, double, "$10 becomes $20", free money</li>
+          <li>airdrop, giveaway (the allocation is purchase-linked, see 11)</li>
+          <li>any future price, target, multiple or return</li>
+          <li>income, earnings, passive income, financial freedom, get rich</li>
+          <li>guaranteed, risk-free, safe investment</li>
+          <li>rank names, percentages or level counts on launch channels</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sec">
+      <h3 class="sub">Tone</h3>
+      <div class="tone">
+        <div><b>Short sentences.</b>One idea each. Read it out loud before it goes.</div>
+        <div><b>No exclamation marks</b>in brand posts. The calm is the point.</div>
+        <div><b>No emojis</b>except a single arrow or dot where a platform needs a visual cue.</div>
+        <div><b>No countdown pressure.</b>No "only 24 hours", no "last chance".</div>
+      </div>
+    </div>
+    <div class="sec">
+      <h3 class="sub">Rewrite examples</h3>
+      <div class="rw">
+        <div class="h red">Came in like this</div><div class="h">Goes out like this</div>
+        <div class="no">Get matched 1:1 and double your NODAL</div><div class="yes">Receive promotional NODAL equal to the quantity you purchased</div>
+        <div class="no">$10 today could be worth so much more</div><div class="yes">$10 can be your first committed NODAL position</div>
+        <div class="no">Don't miss the airdrop, last chance!</div><div class="yes">The entry is open. Start small. Enter the ecosystem.</div>
+        <div class="no">Earn passive income with your network</div><div class="yes">Your own participation never depends on inviting anyone</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:26px">Every caption ends with the risk line. One call to action per post, and it is always the site.</div>
+    <div class="foot">
+      <p class="fine" style="max-width:62ch">Partners who change the words keep the risk line. If you would not say it to a friend sitting across from you, do not post it.</p>
+      <span class="pill"><i></i>gateway.nodalwaves.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 04 ASSET KIT ============================== -->
+<section class="page">
+  <div class="glow" style="width:640px;height:640px;left:12%;top:70%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 04 · Assets</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 5 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">04</span><h2>The asset <em>kit.</em></h2></div>
+    <h3 class="sub">Video · one 24-second film, three formats</h3>
+    <table>
+      <thead><tr><th style="width:34%">File</th><th style="width:22%">Size</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>LaunchSquare.mp4</td><td class="mono-td">1080 × 1080</td><td>Instagram feed, Facebook, LinkedIn, X</td></tr>
+        <tr><td>LaunchVertical.mp4</td><td class="mono-td">1080 × 1920</td><td>Reels, TikTok, Shorts, Stories, WhatsApp status</td></tr>
+        <tr><td>LaunchLandscape.mp4</td><td class="mono-td">1920 × 1080</td><td>YouTube, X, website embed, press</td></tr>
+        <tr><td>launch-video.srt</td><td class="mono-td">subtitles</td><td>Upload with the video wherever captions are accepted</td></tr>
+      </tbody>
+    </table>
+    <div class="sec">
+      <h3 class="sub">Posters · six designs, each in square, vertical and landscape</h3>
+      <div class="posters">
+        <figure><img class="decor" src="thumbs/01-gateway.png" alt=""><figcaption><b><span class="k">01</span>The gateway</b><span>Launch announcement</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/02-ten-dollars.png" alt=""><figcaption><b><span class="k">02</span>$10</b><span>Spending vs participating</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/03-three-steps.png" alt=""><figcaption><b><span class="k">03</span>Three steps</b><span>Mechanics</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/04-ecosystem.png" alt=""><figcaption><b><span class="k">04</span>Ecosystem map</b><span>Where it goes</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/05-no-hype.png" alt=""><figcaption><b><span class="k">05</span>No hype</b><span>Trust</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/06-live-now.png" alt=""><figcaption><b><span class="k">06</span>The entry is open</b><span>Reminder, Stories</span></figcaption></figure>
+      </div>
+    </div>
+    <div class="foot"><p class="fine" style="max-width:70ch">Copy pack: captions per platform, Telegram, WhatsApp, DM, partner and support messages, launch email. PR pack: press release, media pitches, factsheet and FAQ.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 05 CHANNELS ============================== -->
+<section class="page">
+  <div class="glow" style="width:640px;height:640px;left:88%;top:18%;transform:translate(-50%,-50%);opacity:.65"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 05 · Channels</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 6 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">05</span><h2>Channels and <em>cadence.</em></h2></div>
+    <table>
+      <thead><tr><th style="width:15%">Channel</th><th style="width:30%">Format</th><th style="width:33%">Launch week</th><th>After launch</th></tr></thead>
+      <tbody>
+        <tr><td>Instagram</td><td>Reel (vertical video), feed posters (square), Stories (vertical)</td><td>Day 0 Reel + Story. Day 1 to 6 one poster a day</td><td>3 posts a week, 1 Reel a week</td></tr>
+        <tr><td>TikTok</td><td>Vertical video, then poster-led shorts</td><td>Day 0 video. Day 2, 4, 6 short cuts</td><td>2 a week</td></tr>
+        <tr><td>YouTube</td><td>Landscape video, Shorts (vertical)</td><td>Day 0 both</td><td>Shorts weekly</td></tr>
+        <tr><td>X</td><td>Landscape or square video, posters</td><td>Day 0 video thread. Daily poster</td><td>4 to 5 a week</td></tr>
+        <tr><td>LinkedIn</td><td>Landscape video, posters 01, 03, 05</td><td>Day 0 video. Day 2 and 5 posters</td><td>Weekly</td></tr>
+        <tr><td>Facebook</td><td>Square video, posters</td><td>Mirror Instagram</td><td>Mirror Instagram</td></tr>
+        <tr><td>Telegram</td><td>Pinned announcement, daily short posts</td><td>Day 0 pin. Day 1 to 7 posts from the copy pack</td><td>2 to 3 a week</td></tr>
+        <tr><td>WhatsApp</td><td>Forwardable message, vertical video as status</td><td>Day 0</td><td>As needed</td></tr>
+        <tr><td>Email</td><td>Launch note</td><td>Day 0</td><td>One follow-up at Day 14</td></tr>
+      </tbody>
+    </table>
+    <div class="two" style="margin-top:26px">
+      <div class="card">
+        <p class="k" style="margin-bottom:8px">Posting windows</p>
+        <p style="font-size:12px;line-height:1.5;color:var(--text)">Late afternoon and evening, local time for the main audience. One post per channel per day during launch week. Do not stack.</p>
+      </div>
+      <div class="card">
+        <p class="k" style="margin-bottom:8px">Comments and DMs</p>
+        <p style="font-size:12px;line-height:1.5;color:var(--text)">Someone watches every channel for the first six hours of Day 0. Every question gets an answer within the hour, from the support replies in the copy pack.</p>
+      </div>
+    </div>
+    <div class="sec">
+      <h3 class="sub">Hashtags and bio lines</h3>
+      <table>
+        <tbody>
+          <tr><td style="width:24%">Core, every post, max five</td><td class="mono-td">#NodalGateway #NodalWaves #NODAL #Web3 #Polygon</td></tr>
+          <tr><td>Rotate two or three</td><td class="mono-td">#NodalPassport #NodalQuest #DigitalIdentity #Staking #Web3Gaming</td></tr>
+          <tr class="sig"><td>Never</td><td>Anything with airdrop, 100x, moon, gem, passive income, financial freedom</td></tr>
+          <tr><td>Instagram / TikTok bio</td><td>Nodal Gateway · Your entry into the NodalWaves ecosystem · Start small. Enter the ecosystem.</td></tr>
+          <tr><td>X bio</td><td>The entry point into the NodalWaves ecosystem. Start small. Enter the ecosystem. Crypto assets involve risk.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="foot"><p class="fine">Crypto assets involve risk. No guaranteed value or return.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 06 CALENDAR ============================== -->
+<section class="page">
+  <div class="glow" style="width:640px;height:640px;left:15%;top:85%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 06 · Calendar</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 7 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">06</span><h2>The 30-day <em>calendar.</em></h2><span class="right">Day 0 is the day you press go</span></div>
+    <table>
+      <thead><tr><th style="width:16%">Day</th><th>What goes out</th><th style="width:26%">Assets</th></tr></thead>
+      <tbody>
+        <tr><td>T-3</td><td>Internal dry run: links, UTMs, captions pasted into drafts, partner note sent</td><td>All</td></tr>
+        <tr><td>T-1</td><td>Teaser Story / status: the arch frame only, "Tomorrow." No URL yet</td><td>Poster 06 vertical, cropped</td></tr>
+        <tr class="sig"><td>Day 0</td><td>Launch video everywhere. Telegram pin. Email. Press release to the media list. Partner kit sent</td><td>Video ×3, SRT, Telegram pin, email, PR</td></tr>
+        <tr><td>Day 1</td><td>Poster 01 The gateway</td><td>01</td></tr>
+        <tr><td>Day 2</td><td>Poster 02 $10, plus a TikTok short</td><td>02, video cut</td></tr>
+        <tr><td>Day 3</td><td>Poster 03 Three steps</td><td>03</td></tr>
+        <tr><td>Day 4</td><td>Poster 04 Ecosystem map, plus a TikTok short</td><td>04, video cut</td></tr>
+        <tr><td>Day 5</td><td>Poster 05 No hype (LinkedIn leads)</td><td>05</td></tr>
+        <tr><td>Day 6</td><td>Poster 06 The entry is open, Stories with link sticker</td><td>06</td></tr>
+        <tr><td>Day 7</td><td>Thank-you post, FAQ highlights, repin Telegram</td><td>Copy pack, Day 7</td></tr>
+        <tr><td>Day 8 to 14</td><td>Rotate posters 02, 04, 05. Answer every comment. Collect real questions for the FAQ</td><td>02, 04, 05</td></tr>
+        <tr><td>Day 14</td><td>Email follow-up. Second LinkedIn post: what we learned, honestly</td><td>Email</td></tr>
+        <tr><td>Day 15 to 30</td><td>Two posts a week. Community Partner page content on partner channels only</td><td>Community page</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:22px">The site is already live. Pick a weekday, confirm the launch-day checklist on page 9, and start.</div>
+    <div class="sec">
+      <h3 class="sub">Day 0 · run of show (local time)</h3>
+      <table>
+        <tbody>
+          <tr><td style="width:16%">09:00</td><td>Telegram pin and launch email go out. Partner kit sent.</td></tr>
+          <tr><td>11:00</td><td>Press release and factsheet to the media list. Pitches sent one by one, personalised.</td></tr>
+          <tr class="sig"><td>12:00</td><td>Launch video on every channel. Stories with the link sticker.</td></tr>
+          <tr><td>12:00 to 18:00</td><td>Comment and DM watch. Every question answered within the hour.</td></tr>
+          <tr><td>18:00</td><td>Second Story with poster 06. Evening repost of the video on X.</td></tr>
+          <tr><td>20:00</td><td>Day 0 review: what was asked, what broke, what to fix before Day 1.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="foot"><p class="fine">Crypto assets involve risk. No guaranteed value or return.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 07 + 08 ============================== -->
+<section class="page">
+  <div class="glow" style="width:640px;height:640px;left:88%;top:50%;transform:translate(-50%,-50%);opacity:.55"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 07 · Tracking</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 8 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">07</span><h2>Tracking <em>links.</em></h2><span class="right">Base · https://gateway.nodalwaves.com/</span></div>
+    <table>
+      <thead><tr><th style="width:24%">Placement</th><th>Append to the base URL</th></tr></thead>
+      <tbody>
+        <tr><td>Instagram bio</td><td class="mono-td">?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=gateway-launch&amp;utm_content=bio</td></tr>
+        <tr><td>Instagram Story</td><td class="mono-td">?utm_source=instagram&amp;utm_medium=story&amp;utm_campaign=gateway-launch&amp;utm_content=p06</td></tr>
+        <tr><td>TikTok bio</td><td class="mono-td">?utm_source=tiktok&amp;utm_medium=social&amp;utm_campaign=gateway-launch&amp;utm_content=bio</td></tr>
+        <tr><td>YouTube</td><td class="mono-td">?utm_source=youtube&amp;utm_medium=video&amp;utm_campaign=gateway-launch&amp;utm_content=launch-video</td></tr>
+        <tr><td>X</td><td class="mono-td">?utm_source=x&amp;utm_medium=social&amp;utm_campaign=gateway-launch&amp;utm_content=p0N</td></tr>
+        <tr><td>LinkedIn</td><td class="mono-td">?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=gateway-launch&amp;utm_content=p0N</td></tr>
+        <tr><td>Telegram</td><td class="mono-td">?utm_source=telegram&amp;utm_medium=community&amp;utm_campaign=gateway-launch</td></tr>
+        <tr><td>Email</td><td class="mono-td">?utm_source=email&amp;utm_medium=email&amp;utm_campaign=gateway-launch</td></tr>
+        <tr><td>Press</td><td class="mono-td">?utm_source=press&amp;utm_medium=pr&amp;utm_campaign=gateway-launch</td></tr>
+      </tbody>
+    </table>
+    <p class="fine" style="margin-top:10px">Replace p0N with the poster number. Keep the clean URL in caption text; the tracked link goes where the click happens. Partners use their own referral link from the site and nothing else.</p>
+
+    <div class="ph" style="margin-top:30px"><span class="n">08</span><h2>Roles and <em>approval.</em></h2></div>
+    <table>
+      <thead><tr><th style="width:24%">Role</th><th>Owns</th></tr></thead>
+      <tbody>
+        <tr><td>Launch lead</td><td>Calendar, go/no-go, final approval on every post</td></tr>
+        <tr><td>Community lead</td><td>Telegram, WhatsApp, DMs, support replies, partner note</td></tr>
+        <tr><td>Content lead</td><td>Scheduling, captions, subtitle upload, asset QA</td></tr>
+        <tr><td>Compliance reviewer</td><td>Language-rules check on every caption before it is scheduled</td></tr>
+        <tr><td>Press lead</td><td>Media list, pitch, follow-ups, interview requests</td></tr>
+      </tbody>
+    </table>
+    <div class="flow">
+      <div><i>1</i><b>Draft</b><span>Content lead writes from the copy pack</span></div>
+      <div><i>2</i><b>Check</b><span>Compliance reviewer, against page 4</span></div>
+      <div><i>3</i><b>Approve</b><span>Launch lead signs off</span></div>
+      <div><i>4</i><b>Schedule</b><span>Never posted live from a phone</span></div>
+    </div>
+    <div class="foot"><p class="fine">Crypto assets involve risk. No guaranteed value or return.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 09 + 10 ============================== -->
+<section class="page">
+  <div class="glow" style="width:640px;height:640px;left:12%;top:20%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 09 · Launch day</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 9 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">09</span><h2>Launch-day <em>checklist.</em></h2></div>
+    <ul class="check">
+      <li>gateway.nodalwaves.com loads on mobile and desktop; the calculator shows live numbers; Start opens the entry page</li>
+      <li>Tracked links tested; partner referral links tested</li>
+      <li>All three videos play with the sound off and still make sense; subtitles attached where supported</li>
+      <li>Captions pasted and reviewed against the language rules</li>
+      <li>Telegram pin written, stay-safe line included</li>
+      <li>Support replies loaded into the help desk</li>
+      <li>Press release and factsheet sent to the media list; embargo lifts at launch time</li>
+      <li>Someone is watching comments and DMs for the first six hours</li>
+      <li>Impersonation watch: search for fake accounts and lookalike links, report immediately</li>
+    </ul>
+
+    <div class="ph" style="margin-top:30px"><span class="n">10</span><h2>What we <em>measure.</em></h2><span class="right">Reach is not the goal. Understanding is.</span></div>
+    <ul class="num">
+      <li>Site visits per channel (UTMs) and time on page</li>
+      <li>Scroll depth to the "No hype" section</li>
+      <li>Starts of the entry flow, from the gateway app's dashboard</li>
+      <li>Questions asked in comments and DMs, and how many are answered within an hour</li>
+      <li>Saves and shares of poster 05. When the honest post travels, the launch is working</li>
+    </ul>
+    <div class="callout" style="margin-top:20px">Weekly review: what question came up most, and does the page or the FAQ answer it? If not, fix the page before posting more.</div>
+    <div class="foot"><p class="fine">Crypto assets involve risk. No guaranteed value or return.</p></div>
+  </div>
+</section>
+
+<!-- ============================== 11 + 12 ============================== -->
+<section class="page">
+  <div class="glow" style="width:700px;height:700px;left:50%;top:30%;transform:translate(-50%,-50%);opacity:.6"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 11 · Terms</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">gateway.nodalwaves.com</span><span class="idx br">Page 10 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">11</span><h2>Why we never <em>say airdrop.</em></h2></div>
+    <h3 class="display" style="font-size:54px">Promotional NODAL<br><span class="chrome">is purchase-linked.</span></h3>
+    <p class="lede" style="margin-top:16px">An airdrop gives tokens away for nothing. Nodal Gateway's promotional NODAL is tied to a qualifying purchase and a 24-month commitment. Calling it an airdrop would attract people expecting free tokens and set up a complaint later.</p>
+    <p class="lede" style="margin-top:10px">We call it <b>promotional NODAL</b>, we describe it as <b>an additional allocation equal to the quantity purchased</b>, and we leave it there. The copy pack has a ready reply for anyone who asks.</p>
+
+    <div class="ph" style="margin-top:34px"><span class="n">12</span><h2>If something <em>goes wrong.</em></h2></div>
+    <table>
+      <thead><tr><th style="width:36%">Situation</th><th>Do</th></tr></thead>
+      <tbody>
+        <tr><td>A post slips through with banned language</td><td>Delete, repost corrected, note it in the weekly review</td></tr>
+        <tr><td>Impersonator or fake link</td><td>Report on the platform, post the stay-safe line in Telegram, pin it</td></tr>
+        <tr><td>Price question in comments</td><td>Reply with the support line on price. Do not engage further</td></tr>
+        <tr><td>Site outage</td><td>Pause scheduled posts, post a one-line status in Telegram, resume when green</td></tr>
+        <tr><td>Press asks about returns or price targets</td><td>Decline the question, offer the factsheet language, no speculation</td></tr>
+      </tbody>
+    </table>
+    <div class="foot">
+      <p class="fine" style="max-width:60ch">The only official link is gateway.nodalwaves.com. NodalWaves never messages first, never asks for a seed phrase, and never sends a payment address in a DM.</p>
+      <span class="pill"><i></i>gateway.nodalwaves.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BACK ============================== -->
+<section class="page">
+  <div class="glow" style="width:800px;height:800px;left:50%;top:62%;transform:translate(-50%,-50%);opacity:.85"></div>
+  <div class="vig"></div>
+  <span class="idx tl">Fig. 13 · Files</span><span class="idx tr">Nodal Gateway · Launch playbook</span>
+  <span class="idx bl">$NODAL · Polygon</span><span class="idx br">Page 11 / 11</span>
+  <div class="in">
+    <div class="ph"><span class="n">13</span><h2>Where things <em>live.</em></h2></div>
+    <pre><b>nodal-gateway-launch-toolkit/</b>
+  video/        LaunchSquare.mp4 · LaunchVertical.mp4 · LaunchLandscape.mp4 · launch-video.srt
+  posters/      18 PNGs (01–06 × square, vertical, landscape) · DESIGN-PHILOSOPHY.md
+  copy/         captions.md · messages.md
+  playbook/     this document
+  pr/           PRESS-RELEASE.md · MEDIA-PITCH.md · FACTSHEET.md
+  logo/         logo-nodal-gateway.png · gateway-badge-512.png</pre>
+    <div class="two" style="margin-top:18px">
+      <div class="card">
+        <p class="k" style="margin-bottom:8px">Re-render the video</p>
+        <pre style="border:0;padding:0;background:none">cd marketing/video
+npm install
+node render.mjs</pre>
+      </div>
+      <div class="card">
+        <p class="k" style="margin-bottom:8px">Re-render posters and this PDF</p>
+        <pre style="border:0;padding:0;background:none">node preview/shoot.mjs banners \
+  marketing/posters/posters.html marketing/posters/out
+node marketing/playbook/build-pdf.mjs</pre>
+      </div>
+    </div>
+    <svg class="art arches decor" data-w="520" data-h="200" style="margin:auto auto 0"></svg>
+    <div style="margin-top:28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px">
+      <img class="lockup decor" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:64px">
+      <h3 class="display" style="font-size:40px">Start small. <span class="chrome">Enter the ecosystem.</span></h3>
+      <span class="pill"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
+      <p class="fine" style="max-width:66ch">Crypto assets involve risk. No guaranteed value or return. Promotional NODAL is a token-unit allocation, not a fixed future value. © 2026 NodalWaves · Nodal Gateway.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+/* nested semi-elliptical arches receding by a fixed ratio; the innermost opening carries the light */
+const NS = 'http://www.w3.org/2000/svg';
+const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+document.querySelectorAll('svg.arches').forEach(svg => {
+  const W = +svg.dataset.w, H = +svg.dataset.h, n = 7, r = 0.84;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+  const baseY = H - 2;
+  for (let i = 0; i < n; i++) {
+    const k = Math.pow(r, i), w = W * k, h = (H - 4) * k, x = (W - w) / 2;
+    svg.appendChild(el('path', { d: `M ${x} ${baseY} A ${w / 2} ${h} 0 0 1 ${x + w} ${baseY}`, fill: 'none', stroke: i === n - 1 ? '#FF2E4C' : '#8F96A0', 'stroke-width': i === n - 1 ? 1.4 : 0.9, opacity: i === n - 1 ? 1 : 0.28 + i * 0.1 }));
+  }
+  const kin = Math.pow(r, n - 1), win = W * kin, xin = (W - win) / 2;
+  svg.appendChild(el('line', { x1: xin, y1: baseY, x2: xin + win, y2: baseY, stroke: '#FF2E4C', 'stroke-width': 2.5, style: 'filter:drop-shadow(0 0 10px rgba(255,46,76,.9))' }));
+  svg.appendChild(el('line', { x1: 0, y1: baseY, x2: W, y2: baseY, stroke: '#2C3038', 'stroke-width': 1 }));
+  for (let t = 0; t <= 8; t++) svg.appendChild(el('line', { x1: W * t / 8, y1: baseY + 5, x2: W * t / 8, y2: baseY + (t % 4 === 0 ? 15 : 9), stroke: '#6B727C', 'stroke-width': 1 }));
+});
+</script>
+</body>
+</html>
