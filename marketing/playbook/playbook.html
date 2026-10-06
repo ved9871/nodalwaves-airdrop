@@ -42,30 +42,39 @@ th{text-align:left;font:500 8.5px var(--mono);letter-spacing:.2em;text-transform
 td{padding:8px 10px 8px 0;border-bottom:1px solid var(--line);color:var(--body);vertical-align:top}
 td:first-child{color:var(--text);font-weight:500}
 tr.sig td{color:var(--text)}tr.sig td:first-child{color:var(--hot)}
-tr.sig td:first-child::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hot);box-shadow:0 0 8px var(--hot);margin-right:8px;vertical-align:middle}
+tr.sig td:first-child::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hot);margin-right:8px;vertical-align:middle}
 .mono-td{font-family:var(--mono);font-size:9.5px;letter-spacing:.01em;color:var(--chrome2)!important}
-.card{border:1px solid var(--line2);border-radius:10px;padding:16px 18px;background:rgba(14,16,20,.92)}
-.callout{border-left:2px solid var(--hot);padding:12px 16px;background:linear-gradient(90deg,rgba(206,14,45,.14),transparent 75%);color:var(--text);font-size:13.5px;line-height:1.5}
+.card{border:1px solid var(--line2);border-radius:10px;padding:16px 18px;background:var(--hull)}
+.callout{border-left:2px solid var(--hot);padding:12px 16px;background:#1E0A10;color:var(--text);font-size:13.5px;line-height:1.5}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 ul{list-style:none;margin:0;padding:0}
 ul.dots li,ul.xs li,ul.check li{position:relative;padding:7px 0 7px 22px;border-bottom:1px solid var(--line);font-size:12px;color:var(--text);line-height:1.4}
-ul.dots li::before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--chrome);box-shadow:0 0 0 3px rgba(198,205,214,.15)}
-ul.xs li::before{content:"";position:absolute;left:1px;top:12px;width:9px;height:9px;background:linear-gradient(45deg,transparent 42%,var(--hot) 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,var(--hot) 42% 58%,transparent 58%)}
+ul.dots li::before{content:"";position:absolute;left:2px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--chrome);box-shadow:0 0 0 3px #222326}
+ul.xs li::before{content:"×";position:absolute;left:0;top:5px;font:700 15px/1 var(--mono);color:var(--hot)}
 ul.check li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;border:1px solid var(--chrome2);border-radius:2px}
 ul.num{counter-reset:n}
 ul.num li{counter-increment:n;position:relative;padding:8px 0 8px 36px;border-bottom:1px solid var(--line);font-size:12px;color:var(--text);line-height:1.4}
 ul.num li::before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:10px;font:500 9.5px var(--mono);letter-spacing:.2em;color:var(--hot)}
-.pill{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--chrome2);border-radius:999px;padding:9px 16px;font:500 12px var(--mono);color:var(--text);background:rgba(14,16,20,.9);white-space:nowrap}
-.pill i{width:7px;height:7px;border-radius:50%;background:var(--hot);box-shadow:0 0 10px var(--hot)}
+.pill{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--chrome2);border-radius:999px;padding:9px 16px;font:500 12px var(--mono);color:var(--text);background:var(--hull);white-space:nowrap}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--hot)}
 .pill small{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--hot)}
 .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-top:14px}
 .fine{font:9.5px/1.5 var(--mono);color:var(--muted);letter-spacing:.04em}
 .rule{height:1px;background:var(--line2);position:relative;margin:18px 0}
 .rule::before,.rule::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--chrome2)}
 .rule::before{left:0}.rule::after{right:0}
-.sigline{height:2px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 14px rgba(255,46,76,.7)}
+.sigline{height:2px;background:var(--hot)}
 .lockup{display:block;height:auto}
 svg.art{display:block;overflow:visible}
+/* Two-pass PDF build. Pass 1 (body.bg-pass): only the decorative layer is painted and screenshotted per page.
+   Pass 2 (body.print-pass): that screenshot sits behind the page as one opaque image, and the decorative
+   layer is hidden, so the printed PDF carries no gradients, masks or shadows (web PDF viewers reject them). */
+.bgimg{display:none;position:absolute;inset:0;width:100%;height:100%}
+body.bg-pass .in *,body.bg-pass .idx{visibility:hidden}
+body.bg-pass .decor,body.bg-pass .decor *{visibility:visible}
+body.print-pass .bgimg{display:block}
+body.print-pass .decor{visibility:hidden}
+body.print-pass .glow,body.print-pass .vig,body.print-pass .page::before{display:none}
 /* contents */
 .toc{display:flex;flex-direction:column}
 .toc a{display:grid;grid-template-columns:34px 1fr auto;align-items:baseline;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text)}
@@ -84,7 +93,7 @@ svg.art{display:block;overflow:visible}
 .flow::before{content:"";position:absolute;left:12%;right:12%;top:13px;height:1px;background:var(--line2)}
 .flow div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;position:relative}
 .flow i{width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);background:var(--hull);display:flex;align-items:center;justify-content:center;font:500 9px var(--mono);color:var(--chrome2)}
-.flow div:last-child i{border-color:var(--hot);color:#fff;background:linear-gradient(180deg,#2A1218,var(--hull));box-shadow:0 0 14px -2px var(--hot)}
+.flow div:last-child i{border-color:var(--hot);color:#fff;background:#1C1116}
 .flow b{font:800 15px/1 var(--display);text-transform:uppercase;color:var(--text);letter-spacing:.02em}
 .flow span{font-size:10.5px;color:var(--muted);line-height:1.35;max-width:14ch}
 /* audience facts */
@@ -100,10 +109,10 @@ pre{margin:0;font:10.5px/1.6 var(--mono);color:var(--chrome2);background:var(--h
 pre b{color:var(--text);font-weight:500}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips span{font:500 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--chrome);border:1px solid var(--line2);border-radius:999px;padding:7px 11px}
-.chips span.sig{color:#fff;border-color:var(--hot);background:linear-gradient(180deg,#2A1218,var(--hull));box-shadow:0 0 12px -2px var(--hot)}
+.chips span.sig{color:#fff;border-color:var(--hot);background:#1C1116}
 .rw{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
 .rw div{padding:9px 0;border-bottom:1px solid var(--line);font-size:11.5px;line-height:1.45}
-.rw .no{color:var(--chrome2);text-decoration:line-through;text-decoration-color:rgba(255,46,76,.75);text-decoration-thickness:1px}
+.rw .no{color:var(--chrome2);text-decoration:line-through;text-decoration-color:#C1243B;text-decoration-thickness:1px}
 .rw .yes{color:var(--text)}
 .rw .h{font:500 8.5px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--line2)}
 .rw .h.red{color:var(--hot)}
@@ -119,10 +128,10 @@ pre b{color:var(--text);font-weight:500}
   <span class="idx bl">$NODAL · Polygon</span><span class="idx br">Crypto assets involve risk</span>
   <div class="in">
     <div style="display:flex;align-items:center;justify-content:space-between">
-      <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:58px">
+      <img class="lockup decor" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:58px">
       <p class="k" style="text-align:right">Launch playbook<br>v1.0 · October 2026</p>
     </div>
-    <svg class="art arches" data-w="600" data-h="300" style="margin:74px auto 0"></svg>
+    <svg class="art arches decor" data-w="600" data-h="300" style="margin:74px auto 0"></svg>
     <div style="margin-top:auto">
       <h1 class="display" style="font-size:112px">Launch<br><span class="chrome">playbook.</span></h1>
       <p class="lede" style="margin-top:22px;max-width:56ch">How to launch gateway.nodalwaves.com across social, community and press: one message, firm language rules, a 30-day calendar, and where every asset in the kit goes.</p>
@@ -277,12 +286,12 @@ pre b{color:var(--text);font-weight:500}
     <div class="sec">
       <h3 class="sub">Posters · six designs, each in square, vertical and landscape</h3>
       <div class="posters">
-        <figure><img src="thumbs/01-gateway.png" alt=""><figcaption><b><span class="k">01</span>The gateway</b><span>Launch announcement</span></figcaption></figure>
-        <figure><img src="thumbs/02-ten-dollars.png" alt=""><figcaption><b><span class="k">02</span>$10</b><span>Spending vs participating</span></figcaption></figure>
-        <figure><img src="thumbs/03-three-steps.png" alt=""><figcaption><b><span class="k">03</span>Three steps</b><span>Mechanics</span></figcaption></figure>
-        <figure><img src="thumbs/04-ecosystem.png" alt=""><figcaption><b><span class="k">04</span>Ecosystem map</b><span>Where it goes</span></figcaption></figure>
-        <figure><img src="thumbs/05-no-hype.png" alt=""><figcaption><b><span class="k">05</span>No hype</b><span>Trust</span></figcaption></figure>
-        <figure><img src="thumbs/06-live-now.png" alt=""><figcaption><b><span class="k">06</span>The entry is open</b><span>Reminder, Stories</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/01-gateway.png" alt=""><figcaption><b><span class="k">01</span>The gateway</b><span>Launch announcement</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/02-ten-dollars.png" alt=""><figcaption><b><span class="k">02</span>$10</b><span>Spending vs participating</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/03-three-steps.png" alt=""><figcaption><b><span class="k">03</span>Three steps</b><span>Mechanics</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/04-ecosystem.png" alt=""><figcaption><b><span class="k">04</span>Ecosystem map</b><span>Where it goes</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/05-no-hype.png" alt=""><figcaption><b><span class="k">05</span>No hype</b><span>Trust</span></figcaption></figure>
+        <figure><img class="decor" src="thumbs/06-live-now.png" alt=""><figcaption><b><span class="k">06</span>The entry is open</b><span>Reminder, Stories</span></figcaption></figure>
       </div>
     </div>
     <div class="foot"><p class="fine" style="max-width:70ch">Copy pack: captions per platform, Telegram, WhatsApp, DM, partner and support messages, launch email. PR pack: press release, media pitches, factsheet and FAQ.</p></div>
@@ -518,9 +527,9 @@ node render.mjs</pre>
 node marketing/playbook/build-pdf.mjs</pre>
       </div>
     </div>
-    <svg class="art arches" data-w="520" data-h="200" style="margin:auto auto 0"></svg>
+    <svg class="art arches decor" data-w="520" data-h="200" style="margin:auto auto 0"></svg>
     <div style="margin-top:28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px">
-      <img class="lockup" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:64px">
+      <img class="lockup decor" src="../../assets/logo-nodal-gateway.png" alt="Nodal Gateway" style="height:64px">
       <h3 class="display" style="font-size:40px">Start small. <span class="chrome">Enter the ecosystem.</span></h3>
       <span class="pill"><i></i><small>Live now</small>gateway.nodalwaves.com</span>
       <p class="fine" style="max-width:66ch">Crypto assets involve risk. No guaranteed value or return. Promotional NODAL is a token-unit allocation, not a fixed future value. © 2026 NodalWaves · Nodal Gateway.</p>

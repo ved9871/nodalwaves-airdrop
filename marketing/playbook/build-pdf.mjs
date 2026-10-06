@@ -37,7 +37,7 @@ for (const name of ['01-gateway', '02-ten-dollars', '03-three-steps', '04-ecosys
 await tp.close();
 
 /* 2. Render the document */
-const ctx = await browser.newContext({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 1 });
+const ctx = await browser.newContext({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 2 });
 const fontDir = process.env.FONT_DIR;
 if (fontDir) {
   await ctx.route(/https:\/\/fonts\.googleapis\.com\/.*/, r => r.fulfill({ status: 200, contentType: 'text/css', body: readFileSync(`${fontDir}/local.css`, 'utf8') }));
@@ -50,6 +50,31 @@ pg.on('requestfailed', r => errs.push('request failed: ' + r.url()));
 await pg.goto(pathToFileURL(path.join(here, 'playbook.html')).href);
 await pg.evaluate(() => document.fonts.ready);
 await pg.waitForTimeout(800);
+
+/* Pass 1: screenshot the decorative layer of every page as one opaque JPEG */
+const bgDir = path.join(here, 'bg');
+mkdirSync(bgDir, { recursive: true });
+await pg.evaluate(() => document.body.classList.add('bg-pass'));
+await pg.waitForTimeout(200);
+const pageLoc = pg.locator('.page');
+const pageCount0 = await pageLoc.count();
+for (let i = 0; i < pageCount0; i++) {
+  await pageLoc.nth(i).screenshot({ path: path.join(bgDir, `page-${String(i + 1).padStart(2, '0')}.jpg`), type: 'jpeg', quality: 90, scale: 'device' });
+}
+await pg.evaluate(() => document.body.classList.remove('bg-pass'));
+
+/* Pass 2: place each screenshot behind its page and hide the live decorative layer */
+await pg.evaluate(() => {
+  document.querySelectorAll('.page').forEach((p, i) => {
+    const img = document.createElement('img');
+    img.className = 'bgimg';
+    img.src = `bg/page-${String(i + 1).padStart(2, '0')}.jpg?${Date.now()}`;
+    p.insertBefore(img, p.firstChild);
+  });
+  document.body.classList.add('print-pass');
+});
+await pg.evaluate(() => Promise.all([...document.querySelectorAll('img.bgimg')].map(i => i.decode())));
+await pg.waitForTimeout(200);
 
 const report = await pg.evaluate(() => ({
   fonts: [...document.fonts].filter(f => f.status === 'loaded').map(f => f.family).filter((v, i, a) => a.indexOf(v) === i),
@@ -66,10 +91,14 @@ if (errs.length) console.log('errors:', errs);
 
 await pg.pdf({ path: pdfOut, format: 'A4', printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
 const buf = readFileSync(pdfOut);
+const raw = buf.toString('latin1');
+const count = re => (raw.match(re) || []).length;
+const pagesInPdf = count(/\/Type\s*\/Page(?![s])/g);
+console.log(`PDF check · gradient shadings: ${count(/\/ShadingType/g)} · soft masks: ${count(/\/SMask\s*(?!\/None)/g)} · transparency groups beyond the page groups: ${Math.max(0, count(/\/S\s*\/Transparency/g) - pagesInPdf)}  (all should be 0 for web PDF viewers)`);
 const pageCount = (buf.toString('latin1').match(/\/Type\s*\/Page(?![s])/g) || []).length;
 console.log(`wrote ${path.relative(root, pdfOut)} · ${(buf.length / 1024 / 1024).toFixed(2)} MB · ${pageCount} pages`);
 
-/* 3. Review images, one per page */
+/* 3. Review images, one per page (print pass, i.e. what the PDF carries) */
 const pages = pg.locator('.page');
 const n = await pages.count();
 for (let i = 0; i < n; i++) await pages.nth(i).screenshot({ path: path.join(reviewDir, `page-${String(i + 1).padStart(2, '0')}.png`) });
